@@ -1,7 +1,7 @@
 package Controllers;
 
-import core.Movie;
-import core.MovieService;
+import com.team18.MBC.core.Movie;
+import com.team18.MBC.core.MovieService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +17,7 @@ public class MovieController {
 
     public MovieController(MovieService movieService) {
         this.movieService = movieService;
+        System.out.println("Testing");
     }
 
     @GetMapping

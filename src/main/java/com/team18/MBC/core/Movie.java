@@ -1,12 +1,10 @@
-package core;
+package com.team18.MBC.core;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "movies")
 public class Movie {
 
     @Id
@@ -15,16 +13,21 @@ public class Movie {
     private String title;
     private String genre;
     private String director;
+
+    @Column(name = "RELEASEYEAR")
     private int releaseYear;
+
+    private String description;
 
     public Movie() {
     }
 
-    public Movie(String title, String genre, String director, int releaseYear) {
+    public Movie(String title, String genre, String director, int releaseYear, String description) {
         this.title = title;
         this.genre = genre;
         this.director = director;
         this.releaseYear = releaseYear;
+        this.description = description;
     }
 
     public Long getId() {
@@ -65,5 +68,11 @@ public class Movie {
 
     public void setReleaseYear(int releaseYear) {
         this.releaseYear = releaseYear;
+    }
+
+    public String getDescription() { return description; }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

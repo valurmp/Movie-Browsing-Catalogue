@@ -1,4 +1,4 @@
-package core;
+package com.team18.MBC.core;
 
 import org.springframework.stereotype.Service;
 
