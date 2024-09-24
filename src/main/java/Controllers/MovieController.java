@@ -15,19 +15,24 @@ import java.util.List;
 public class MovieController {
     private MovieService movieService;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Movie> getMovieById(@PathVariable Long id) {
-        Movie movie = movieService.getMovieById(id);
-        if (movie != null) {
-            return ResponseEntity.ok(movie);
-        } else {
-            return ResponseEntity.notFound().build(); // 404 Not Found
-        }
+    public MovieController(MovieService movieService) {
+        this.movieService = movieService;
     }
-    
+
     @GetMapping
     public ResponseEntity<List<Movie>> getAllMovies() {
         List<Movie> movies = movieService.getAllMovies();
         return ResponseEntity.ok(movies); // 200 OK
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<Movie> getMovieById(@PathVariable Long id) {
+        Movie movie = movieService.getMovieById(id);
+        if (movie != null) {
+            return ResponseEntity.ok(movie);
+
+        } else {
+            return ResponseEntity.notFound().build(); // 404 Not Found
+        }
+    }
+
 }
