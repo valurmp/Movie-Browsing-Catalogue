@@ -17,7 +17,6 @@ public class MovieController {
 
     public MovieController(MovieService movieService) {
         this.movieService = movieService;
-        System.out.println("Testing");
     }
 
     @GetMapping
