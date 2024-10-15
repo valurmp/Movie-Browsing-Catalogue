@@ -15,11 +15,21 @@ public class MovieService {
     }
 
     public Movie getMovieById(Long id) {
-        Optional<Movie> movie = movieRepository.findById(id);
+        Optional<Movie> movie = movieRepository.findByIdAndType(id, "movie");
         return movie.orElse(null);
     }
     public List<Movie> getAllMovies() {
-        return movieRepository.findAll();
+        return movieRepository.findByType("movie");
+    }
+
+    //Seperation for TV Shows instead of creating a new TV Show classes.
+
+    public Movie getTvShowById(Long id) {
+        Optional<Movie> movie = movieRepository.findByIdAndType(id, "tv_show");
+        return movie.orElse(null);
+    }
+    public List<Movie> getAllTvShows() {
+        return movieRepository.findByType("tv_show");
     }
 
 }
