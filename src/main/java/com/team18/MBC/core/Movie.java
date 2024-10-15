@@ -19,15 +19,18 @@ public class Movie {
 
     private String description;
 
+    private String type;
+
     public Movie() {
     }
 
-    public Movie(String title, String genre, String director, int releaseYear, String description) {
+    public Movie(String title, String genre, String director, int releaseYear, String description, String type) {
         this.title = title;
         this.genre = genre;
         this.director = director;
         this.releaseYear = releaseYear;
         this.description = description;
+        this.type = type;
     }
 
     public Long getId() {
@@ -75,4 +78,8 @@ public class Movie {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public String getType() { return type; }
+
+    public void setType(String type) { this.type = type; }
 }
