@@ -16,11 +16,15 @@ public class Review {
     private String review_text;
 
 
+    public Review(){
+
+    }
 
     public Review(int rating, String review_text) {
         this.rating=rating;
         this.review_text=review_text;
     }
+
 
     public Long getId() {
         return id;
