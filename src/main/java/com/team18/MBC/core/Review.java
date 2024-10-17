@@ -10,9 +10,11 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long user_id;
-    private Long movie_id ;
-    private int rating ;
+    @Column(name = "user_id")
+    private Long userId;
+    @Column(name = "movie_id")
+    private Long movieId;
+    private int rating;
     private String review_text;
 
 
@@ -20,9 +22,11 @@ public class Review {
 
     }
 
-    public Review(int rating, String review_text) {
+    public Review(int rating, String review_text, long movieId, long userId) {
         this.rating=rating;
         this.review_text=review_text;
+        this.movieId=movieId;
+        this.userId=userId;
     }
 
 
@@ -34,20 +38,20 @@ public class Review {
         this.id = id;
     }
 
-    public Long getUser_id() {
-        return user_id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public Long getMovie_id() {
-        return movie_id;
+    public Long getMovieId() {
+        return movieId;
     }
 
-    public void setMovie_id(Long movie_id) {
-        this.movie_id = movie_id;
+    public void setMovieId(Long movieId) {
+        this.movieId = movieId;
     }
 
     public int getRating() {

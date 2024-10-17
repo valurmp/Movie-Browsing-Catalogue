@@ -21,4 +21,13 @@ public class ReviewService {
         return review.orElse(null);
     }
 
+    public List<Review> getReviewsByMovieId(Long movieId) {
+        return reviewRepository.findByMovieId(movieId);
+    }
+
+    public double getAverageRatingForMovie(long movieId) {
+        List<Review> reviews = reviewRepository.findByMovieId(movieId);
+        return reviews.stream().mapToInt(Review::getRating).average().orElse(0.0);
+    }
+
 }
