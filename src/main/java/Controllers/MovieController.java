@@ -2,15 +2,15 @@ package Controllers;
 
 import com.team18.MBC.core.Movie;
 import com.team18.MBC.core.MovieService;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/movies")
 public class MovieController {
     private MovieService movieService;
@@ -20,18 +20,22 @@ public class MovieController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Movie>> getAllMovies() {
+    public String getAllMovies(Model model) {
         List<Movie> movies = movieService.getAllMovies();
-        return ResponseEntity.ok(movies); // 200 OK
+        model.addAttribute("movies", movies);
+        model.addAttribute("contextPath", "movies");
+        model.addAttribute("contentTitle", "Movies");
+        return "movies";
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Movie> getMovieById(@PathVariable Long id) {
+    public String getMovieById(@PathVariable Long id, Model model) {
         Movie movie = movieService.getMovieById(id);
         if (movie != null) {
-            return ResponseEntity.ok(movie);
-
+            model.addAttribute("movie", movie);
+            model.addAttribute("contextPath", "movies");
+            return "movie-details";
         } else {
-            return ResponseEntity.notFound().build(); // 404 Not Found
+            return "404";
         }
     }
 
