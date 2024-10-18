@@ -8,12 +8,22 @@
 <body>
 <h1>The Movie Browsing Catalogue</h1>
 <div th:replace="/nav :: nav"></div>
-<div>
+<div id="movie">
   <h2 th:text="${movie.title}">Movie Title</h2>
+  <p th:text="'Average Rating: ' + ${averageRating}"></p>
   <p th:text="${movie.description}">Description</p>
   <p th:text="${movie.genre}">Genre</p>
   <p th:text="${movie.releaseYear}">Release Year</p>
   <p th:text="${movie.director}">Director</p>
+</div>
+<div id="reviews">
+  <h2>User Reviews:</h2>
+  <ul>
+    <li th:each="review : ${reviews}">
+      <p th:text="'Rating: ' + ${review.rating}"></p>
+      <p th:text="${review.review_text}"></p>
+    </li>
+  </ul>
 </div>
 </body>
 </html>

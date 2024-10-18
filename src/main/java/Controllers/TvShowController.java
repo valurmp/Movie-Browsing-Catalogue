@@ -2,6 +2,8 @@ package Controllers;
 
 import com.team18.MBC.core.Movie;
 import com.team18.MBC.core.MovieService;
+import com.team18.MBC.core.Review;
+import com.team18.MBC.core.ReviewService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,9 +17,11 @@ import java.util.List;
 @RequestMapping("/tvshows")
 public class TvShowController {
     private MovieService movieService;
+    private ReviewService reviewService;
 
-    public TvShowController(MovieService movieService) {
+    public TvShowController(MovieService movieService, ReviewService reviewService) {
         this.movieService = movieService;
+        this.reviewService = reviewService;
     }
     @GetMapping
     public String getAllTvShows(Model model) {
@@ -34,6 +38,12 @@ public class TvShowController {
         if (tvShow != null) {
             model.addAttribute("movie", tvShow);
             model.addAttribute("contextPath", "tvshows");
+
+            List<Review> reviews = reviewService.getReviewsByMovieId(id);
+            double averageRating = reviewService.getAverageRatingForMovie(id);
+            model.addAttribute("reviews", reviews);
+            model.addAttribute("averageRating", averageRating);
+
             return "movie-details";
         } else {
             return "404";

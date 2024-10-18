@@ -3,14 +3,15 @@ package Controllers;
 import com.team18.MBC.core.Review;
 import com.team18.MBC.core.ReviewService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/reviews")
 public class ReviewController {
     private ReviewService reviewService;
@@ -34,6 +35,18 @@ public class ReviewController {
             return ResponseEntity.notFound().build(); // 404 Not Found
         }
     }
+    @GetMapping("/movie/{movieId}")
+    public String getReviewsForMovie(@PathVariable Long movieId, Model model) {
+        List<Review> reviews = reviewService.getReviewsByMovieId(movieId);
+        model.addAttribute("reviews", reviews);
+        return "movie-details";
+    }
 
+    @GetMapping("/tvshow/{tvShowId}")
+    public String getReviewsForTvShow(@PathVariable Long tvShowId, Model model) {
+        List<Review> reviews = reviewService.getReviewsByMovieId(tvShowId);
+        model.addAttribute("reviews", reviews);
+        return "movie-details";
+    }
 
 }
