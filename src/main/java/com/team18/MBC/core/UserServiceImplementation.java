@@ -2,20 +2,13 @@ package com.team18.MBC.core;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserServiceImplementation implements UserService {
 
-    private UserRepository userRepository;
-
     @Autowired
-    public UserServiceImplementation(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
+    private UserRepository userRepository;
 
     @Override
     public User save(User user) {
@@ -34,18 +27,26 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public User findByUsername(String username) {
-        Optional<User> user = userRepository.findByUsername(username);
-        return user.orElse(null);
+        return userRepository.findByUsername(username).orElse(null);
     }
 
     @Override
     public User login(User user) {
-        User doesExist = findByUsername(user.getUsername());
-        if (doesExist != null) {
-            if (doesExist.getPassword().equals(user.getPassword())) {
-                return doesExist;
-            }
+        User existingUser = userRepository.findByUsername(user.getUsername()).orElse(null);
+        if (existingUser != null && existingUser.getPassword().equals(user.getPassword())) {
+            return existingUser;
         }
         return null;
+    }
+
+    @Override
+    public User findUserById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void updatePassword(User user, String newPassword) {
+        user.setPassword(newPassword);
+        userRepository.save(user);  // Save the user with the new password
     }
 }
