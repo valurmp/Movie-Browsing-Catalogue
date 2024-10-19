@@ -82,7 +82,7 @@ public class UserController {
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public String getAllUsers(Model model) {
-        List<User> users = userService.findAll();  // Call findAll() instead of findAllUsers()
+        List<User> users = userService.findAll();
         model.addAttribute("users", users);
         return "users";
     }
