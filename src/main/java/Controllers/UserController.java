@@ -78,8 +78,6 @@ public class UserController {
         return "redirect:/";
     }
 
-    // New Endpoints
-
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public String getAllUsers(Model model) {
         List<User> users = userService.findAll();
@@ -101,7 +99,7 @@ public class UserController {
     @RequestMapping(value = "/user/{id}/update-password", method = RequestMethod.POST)
     public String updatePassword(@PathVariable("id") Long id, String newPassword, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "redirect:/user/" + id + "/update-password"; // If errors, reload password update page
+            return "redirect:/user/" + id + "/update-password";
         }
         User user = userService.findUserById(id);
         if (user != null) {
