@@ -47,6 +47,6 @@ public class UserServiceImplementation implements UserService {
     @Override
     public void updatePassword(User user, String newPassword) {
         user.setPassword(newPassword);
-        userRepository.save(user);  // Save the user with the new password
+        userRepository.save(user);
     }
 }
