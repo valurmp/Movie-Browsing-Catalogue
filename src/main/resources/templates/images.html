@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Image Display</title>
+</head>
+<body>
+<h1>Uploaded Images</h1>
+<div th:each="image : ${images}">
+    <h2>Image ID: <span th:text="${image.id}"></span></h2>
+    <img th:src="@{/images/{id}(id=${image.id})}" alt="Image"/>
+</div>
+</body>
+</html>

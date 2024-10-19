@@ -4,16 +4,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserServiceImplementation implements UserService {
 
-    private UserRepository userRepository;
 
     @Autowired
-    public UserServiceImplementation(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    private UserRepository userRepository;
+
+
+    public void registerUser(String username, String password) {
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password); // Encode password
+
+        userRepository.save(user);
     }
 
 
@@ -34,8 +39,7 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public User findByUsername(String username) {
-        Optional<User> user = userRepository.findByUsername(username);
-        return user.orElse(null);
+        return userRepository.findByUsername(username).orElse(null);
     }
 
     @Override

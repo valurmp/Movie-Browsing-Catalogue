@@ -1,5 +1,6 @@
 package Controllers;
 
+import com.team18.MBC.core.ImageService;
 import com.team18.MBC.core.User;
 import com.team18.MBC.core.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class UserController {
 
     UserService userService;
+    ImageService imageService;
 
     @Autowired
     public UserController(UserService userService) {
@@ -83,4 +85,6 @@ public class UserController {
         userService.delete(userToDelete);
         return "redirect:/";
     }
+
+
 }
