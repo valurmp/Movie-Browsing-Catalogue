@@ -96,7 +96,7 @@ public class UserController {
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/user/{ID}/update-password", method = RequestMethod.PATCH)
+    @PatchMapping("/user/{ID}/update-password")
     public String updatePassword(
             @PathVariable("ID") Long ID,
             @ModelAttribute("passwordChangeRequest") PasswordChangeRequest passwordChangeRequest,
@@ -123,7 +123,7 @@ public class UserController {
         User user = userService.findUserById(ID);
         if (user != null) {
             model.addAttribute("user", user);
-            model.addAttribute("passwordChangeRequest", new PasswordChangeRequest());  // Add the DTO to the model
+            model.addAttribute("passwordChangeRequest", new PasswordChangeRequest());
             return "updatePassword";
         }
         return "redirect:/";
