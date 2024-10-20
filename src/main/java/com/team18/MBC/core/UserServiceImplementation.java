@@ -3,6 +3,7 @@ package com.team18.MBC.core;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImplementation implements UserService {
@@ -10,6 +11,8 @@ public class UserServiceImplementation implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ImageRepository imageRepository;
 
 
     public void registerUser(String username, String password) {
@@ -59,5 +62,10 @@ public class UserServiceImplementation implements UserService {
     public void updatePassword(User user, String newPassword) {
         user.setPassword(newPassword);
         userRepository.save(user);
+    }
+
+    @Override
+    public Optional<Image> getProfileImageForUser(Long userId) {
+        return imageRepository.findByUserId(userId);
     }
 }
