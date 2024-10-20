@@ -7,9 +7,15 @@
 </head>
 <body>
 <h1>User Profile</h1>
+<div th:replace="/nav :: nav"></div>
 <div>
     <p>Username: <span th:text="${user.username}">Username</span></p>
     <p>Email: <span th:text="${user.email}">Email</span></p>
+    <div th:if="${isOwnProfile}">
+        <a th:href="@{/delete/{username}(username=${user.username})}">
+            Delete Profile
+        </a>
+    </div>
 </div>
 </body>
 </html>
