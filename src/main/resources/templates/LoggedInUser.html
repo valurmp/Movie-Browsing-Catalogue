@@ -8,6 +8,8 @@
 <p th:text="${LoggedInUser.username}"></p>
 <p th:text="${LoggedInUser.email}"></p>
 <p th:text="${LoggedInUser.password}"></p>
+
+
 <a th:href="@{/delete/{username}(username=${LoggedInUser.username})}">Delete user</a>
 
 

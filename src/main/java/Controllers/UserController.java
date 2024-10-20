@@ -1,5 +1,6 @@
 package Controllers;
 
+import com.team18.MBC.core.ImageService;
 import com.team18.MBC.core.User;
 import com.team18.MBC.core.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -15,6 +16,7 @@ import java.util.List;
 public class UserController {
 
     UserService userService;
+    ImageService imageService;
 
     @Autowired
     public UserController(UserService userService) {
