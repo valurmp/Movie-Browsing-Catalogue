@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Upload Profile Picture</title>
+</head>
+<body>
+
+<h1>Upload Profile Picture</h1>
+
+<form action="#" th:action="@{/images/upload}" method="post" enctype="multipart/form-data">
+    <label for="file">Choose a profile picture:</label>
+    <input type="file" id="file" name="file" accept="image/*" required>
+    <button type="submit">Upload</button>
+</form>
+
+<!-- Display upload result message -->
+<div th:if="${message}">
+    <p th:text="${message}"></p>
+</div>
+<a href="/users/profile"><button>Return To Profile</button></a>
+
+</body>
+</html>

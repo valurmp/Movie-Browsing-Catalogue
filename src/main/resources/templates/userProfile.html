@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+</head>
+<body>
+<h1>User Profile</h1>
+<div th:replace="/nav :: nav"></div>
+<div>
+    <p>Username: <span th:text="${user.username}">Username</span></p>
+    <p>Email: <span th:text="${user.email}">Email</span></p>
+
+    <div th:if="${profileImage != null}">
+        <img th:src="@{/images/{id}(id=${profileImage.id})}" alt="Profile Image" style="max-width:200px; max-height:200px"/>
+    </div>
+    <div th:if="${profileImage == null}">
+        <p>No profile image available.</p>
+    </div>
+
+    <div th:if="${isOwnProfile}">
+        <a th:href="@{/delete/{username}(username=${user.username})}">
+            <button>Delete Profile</button>
+        </a>
+        <a th:href="@{/users/{id}/update-password(id=${user.ID})}">
+            <button>Update Password</button>
+        </a>
+        <a href="/images/upload">
+            <button>Upload Picture</button>
+        </a>
+    </div>
+</div>
+</body>
+</html>
