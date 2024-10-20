@@ -55,7 +55,7 @@ public class UserController {
         if (exists != null) {
             session.setAttribute("LoggedInUser", exists);
             model.addAttribute("LoggedInUser", exists);
-            return "LoggedInUser";
+            return "redirect:/users/profile";
         }
         return "redirect:/";
     }
@@ -95,10 +95,15 @@ public class UserController {
         }
     }
     @RequestMapping(value = "/users/{id}/profile", method = RequestMethod.GET)
-    public String getUserById(@PathVariable("id") Long id, Model model) {
-        User user = userService.findUserById(id);
-        if (user != null) {
-            model.addAttribute("user", user);
+    public String getUserById(@PathVariable("id") Long id, Model model, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("LoggedInUser");
+        User profileUser = userService.findUserById(id);
+        if (profileUser != null) {
+            System.out.println("LoggedInUser ID: " + (loggedInUser != null ? loggedInUser.getID() : "null"));
+            System.out.println("ProfileUser ID: " + profileUser.getID());
+            model.addAttribute("user", profileUser);
+            boolean isOwnProfile = loggedInUser != null && loggedInUser.getID() == profileUser.getID();
+            model.addAttribute("isOwnProfile", isOwnProfile);
             return "userProfile";
         }
         return "redirect:/";
@@ -143,6 +148,7 @@ public class UserController {
         User sessionUser = (User) session.getAttribute("LoggedInUser");
         if (sessionUser != null) {
             model.addAttribute("user", sessionUser);
+            model.addAttribute("isOwnProfile", true);
             return "userProfile";
         }
         return "redirect:/login";
