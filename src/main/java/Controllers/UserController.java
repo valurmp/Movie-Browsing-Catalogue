@@ -7,10 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
+import org.springframework.web.bind.annotation.*;
+import com.team18.MBC.core.PasswordChangeRequest;
 import java.util.List;
 
 @Controller
@@ -96,15 +94,39 @@ public class UserController {
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/user/{id}/update-password", method = RequestMethod.GET)
-    public String showUpdatePasswordPage(@PathVariable("id") Long id, Model model) {
-        User user = userService.findUserById(id);
+    @RequestMapping(value = "/user/{ID}/update-password", method = RequestMethod.PATCH)
+    public String updatePassword(
+            @PathVariable("ID") Long ID,
+            @ModelAttribute("passwordChangeRequest") PasswordChangeRequest passwordChangeRequest,
+            BindingResult result,
+            Model model) {
+
+        if (result.hasErrors()) {
+            return "updatePassword";
+        }
+
+        User user = userService.findUserById(ID);
+        if (user != null) {
+            userService.updatePassword(user, passwordChangeRequest.getNewPassword());
+            return "redirect:/user/" + ID;
+        }
+
+        return "redirect:/";
+    }
+
+
+
+    @RequestMapping(value = "/user/{ID}/update-password", method = RequestMethod.GET)
+    public String showUpdatePasswordPage(@PathVariable("ID") Long ID, Model model) {
+        User user = userService.findUserById(ID);
         if (user != null) {
             model.addAttribute("user", user);
+            model.addAttribute("passwordChangeRequest", new PasswordChangeRequest());  // Add the DTO to the model
             return "updatePassword";
         }
         return "redirect:/";
     }
+
 
     @RequestMapping(value = "/user/profile", method = RequestMethod.GET)
     public String getLoggedInUserProfile(HttpSession session, Model model) {
