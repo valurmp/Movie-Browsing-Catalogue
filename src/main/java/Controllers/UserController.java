@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class UserController {
@@ -104,6 +105,11 @@ public class UserController {
             model.addAttribute("user", profileUser);
             boolean isOwnProfile = loggedInUser != null && loggedInUser.getID() == profileUser.getID();
             model.addAttribute("isOwnProfile", isOwnProfile);
+
+            Optional<Image> profileImage = userService.getProfileImageForUser(profileUser.getID());
+            profileImage.ifPresent(image -> model.addAttribute("profileImage", image));
+
+
             return "userProfile";
         }
         return "redirect:/";
@@ -123,7 +129,7 @@ public class UserController {
         User user = userService.findUserById(ID);
         if (user != null) {
             userService.updatePassword(user, passwordChangeRequest.getNewPassword());
-            return "redirect:/users/" + ID;
+            return "redirect:/users/profile";
         }
 
         return "redirect:/";
@@ -149,6 +155,10 @@ public class UserController {
         if (sessionUser != null) {
             model.addAttribute("user", sessionUser);
             model.addAttribute("isOwnProfile", true);
+
+            Optional<Image> profileImage = userService.getProfileImageForUser(sessionUser.getID());
+            profileImage.ifPresent(image -> model.addAttribute("profileImage", image));
+
             return "userProfile";
         }
         return "redirect:/login";
