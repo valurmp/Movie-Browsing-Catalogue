@@ -96,15 +96,12 @@ public class UserController {
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/user/{id}/update-password", method = RequestMethod.POST)
-    public String updatePassword(@PathVariable("id") Long id, String newPassword, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            return "redirect:/user/" + id + "/update-password";
-        }
+    @RequestMapping(value = "/user/{id}/update-password", method = RequestMethod.GET)
+    public String showUpdatePasswordPage(@PathVariable("id") Long id, Model model) {
         User user = userService.findUserById(id);
         if (user != null) {
-            userService.updatePassword(user, newPassword);
-            return "redirect:/user/" + id;
+            model.addAttribute("user", user);
+            return "updatePassword";
         }
         return "redirect:/";
     }
