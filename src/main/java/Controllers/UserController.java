@@ -1,15 +1,14 @@
 package Controllers;
 
-import com.team18.MBC.core.ImageService;
-import com.team18.MBC.core.User;
-import com.team18.MBC.core.UserService;
+import com.team18.MBC.core.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import com.team18.MBC.core.PasswordChangeRequest;
+
 import java.util.List;
 
 @Controller
@@ -85,8 +84,17 @@ public class UserController {
         return "users";
     }
 
+    @GetMapping("/users/{id}")
+    public ResponseEntity<User> getUserAPIById(@PathVariable Long id) {
+        User user = userService.findUserById(id);
+        if (user != null) {
+            return ResponseEntity.ok(user);
 
-    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
+        } else {
+            return ResponseEntity.notFound().build(); // 404 Not Found
+        }
+    }
+    @RequestMapping(value = "/users/{id}/profile", method = RequestMethod.GET)
     public String getUserById(@PathVariable("id") Long id, Model model) {
         User user = userService.findUserById(id);
         if (user != null) {
@@ -96,7 +104,7 @@ public class UserController {
         return "redirect:/";
     }
 
-    @PatchMapping("/user/{ID}/update-password")
+    @RequestMapping(value = "/users/{ID}/update-password", method = RequestMethod.PATCH)
     public String updatePassword(
             @PathVariable("ID") Long ID,
             @ModelAttribute("passwordChangeRequest") PasswordChangeRequest passwordChangeRequest,
@@ -110,7 +118,7 @@ public class UserController {
         User user = userService.findUserById(ID);
         if (user != null) {
             userService.updatePassword(user, passwordChangeRequest.getNewPassword());
-            return "redirect:/user/" + ID;
+            return "redirect:/users/" + ID;
         }
 
         return "redirect:/";
@@ -118,7 +126,7 @@ public class UserController {
 
 
 
-    @RequestMapping(value = "/user/{ID}/update-password", method = RequestMethod.GET)
+    @RequestMapping(value = "/users/{ID}/update-password", method = RequestMethod.GET)
     public String showUpdatePasswordPage(@PathVariable("ID") Long ID, Model model) {
         User user = userService.findUserById(ID);
         if (user != null) {
@@ -130,7 +138,7 @@ public class UserController {
     }
 
 
-    @RequestMapping(value = "/user/profile", method = RequestMethod.GET)
+    @RequestMapping(value = "/users/profile", method = RequestMethod.GET)
     public String getLoggedInUserProfile(HttpSession session, Model model) {
         User sessionUser = (User) session.getAttribute("LoggedInUser");
         if (sessionUser != null) {
