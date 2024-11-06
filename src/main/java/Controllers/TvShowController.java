@@ -68,4 +68,12 @@ public class TvShowController {
         return "tvShowCategories";
     }
 
+    @GetMapping("/categories/{category}")
+    public String getTvShowsBySpecificCategory(@PathVariable String category, Model model) {
+        List<Movie> filteredTvShows = movieService.getTvShowsByGenre(category);
+        model.addAttribute("tvShows", filteredTvShows);
+        return "tvShowCategoriesSpecific";
+    }
+
+
 }
