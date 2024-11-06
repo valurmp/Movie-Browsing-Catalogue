@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>List of Actors</title>
+</head>
+<body>
+<div th:replace="/nav :: nav"></div>
+<h1>Actor List</h1>
+<ul th:each="actor : ${actors}">
+    <a th:href="@{'/actors/' + ${actor.id}}" th:text="${actor.name}"></a>
+    </ul>
+
+</body>
+</html>
