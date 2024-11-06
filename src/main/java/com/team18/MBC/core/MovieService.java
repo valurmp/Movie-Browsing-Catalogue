@@ -32,9 +32,6 @@ public class MovieService {
         return movieRepository.findByType("tv_show");
     }
 
-    public List<String> getTvShowCategories() {
-        return movieRepository.findDistinctGenresByType("tv_show");
-    }
 
     public List<Movie> getTvShowsByGenre(String genre) {
         return movieRepository.findTVShowByGenreContaining(genre);

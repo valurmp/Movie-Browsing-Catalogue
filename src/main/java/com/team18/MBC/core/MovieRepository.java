@@ -10,9 +10,6 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
     List<Movie> findByType(String type);
     Optional<Movie> findByIdAndType(Long id, String type);
 
-    @Query("SELECT DISTINCT m.genre FROM Movie m WHERE m.type = :type")
-    List<String> findDistinctGenresByType(String type);
-
     @Query("SELECT m FROM Movie m WHERE m.genre LIKE %:genre% AND m.type = 'tv_show'")
     List<Movie> findTVShowByGenreContaining(String genre);
 }
