@@ -10,10 +10,8 @@ public class Actor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "id")
     private String name;
-    @Column(name = "movie_id")
-    private Long movie_id;
+//    private Long movie_id;
     private int age;
     private String gender;
 
@@ -22,10 +20,10 @@ public class Actor {
 
     }
 
-    public Actor(int age, String gender, long movie_id, String name) {
+    public Actor(int age, String gender, String name) {
         this.age = age;
         this.gender = gender;
-        this.movie_id = movie_id;
+    //    this.movie_id = movie_id;
         this.name = name;
     }
 
@@ -44,7 +42,7 @@ public class Actor {
     public void setName(String name) {
         this.name = name;
     }
-
+/*
     public Long getMovie_id() {
         return movie_id;
     }
@@ -52,7 +50,7 @@ public class Actor {
     public void setMovie_id(Long movie_id) {
         this.movie_id = movie_id;
     }
-
+*/
     public int getAge() {
         return age;
     }
