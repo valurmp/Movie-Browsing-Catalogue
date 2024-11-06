@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Controller
@@ -49,4 +52,28 @@ public class TvShowController {
             return "404";
         }
     }
+
+    @GetMapping("/categories")
+    public String getTvShowCategories(Model model) {
+        List<Movie> tvShows = movieService.getAllTvShows();
+
+        Set<String> uniqueGenres = new HashSet<>();
+        for (Movie movie : tvShows) {
+            String[] genres = movie.getGenre().split(", ");
+            uniqueGenres.addAll(Arrays.asList(genres));
+        }
+
+        // Add the unique genres to the model
+        model.addAttribute("categories", uniqueGenres);
+        return "tvShowCategories";
+    }
+
+    @GetMapping("/categories/{category}")
+    public String getTvShowsBySpecificCategory(@PathVariable String category, Model model) {
+        List<Movie> filteredTvShows = movieService.getTvShowsByGenre(category);
+        model.addAttribute("tvShows", filteredTvShows);
+        return "tvShowCategoriesSpecific";
+    }
+
+
 }
