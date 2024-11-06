@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>TV Show Categories</h1>
+<div th:replace="/nav :: nav"></div>
+<h3>Selected TV Show Category: <span th:text="${category}"></span></h3>
+<div th:if="${not tvShows.isEmpty()}">
+    <ul>
+        <li th:each="tvShow : ${tvShows}">
+            <a th:href="@{'/tvshows/' + ${tvShow.id}}" th:text="${tvShow.title}"></a>
+        </li>
+    </ul>
+</div>
+</body>
+</html>
