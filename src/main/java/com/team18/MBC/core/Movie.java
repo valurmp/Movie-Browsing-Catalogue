@@ -1,11 +1,16 @@
 package com.team18.MBC.core;
 
-
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "movies")
 public class Movie {
+
+    @OneToMany(mappedBy = "movie")
+    private List<WatchlistItems> watchlistItems;
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
