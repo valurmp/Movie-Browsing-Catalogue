@@ -1,21 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Browsing Catalog</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
 </head>
 <body>
-<h1>Welcome to the Movie Browsing Catalog</h1>
-<nav>
-    <ul>
-        <li><a href="/movies">Movies</a></li>
-        <li><a href="/tvshows">TV Shows</a></li>
-        <li><a href="/reviews">Reviews</a></li>
-        <li><a href="/signup">Sign Up</a></li>
-        <li><a href="/login">Login</a></li>
-    </ul>
-</nav>
+
+<!-- Navigation Bar -->
+<div th:replace="/nav :: nav"></div>
+<!-- Centered container with max width -->
+<div class="container">
+    <!-- Main Content -->
+    <div class="main-content">
+        <h1>Movie Browsing Catalogue</h1>
+
+    </div>
+
+</div>
+
 
 </body>
 </html>

@@ -1,0 +1,281 @@
+ {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Ensures padding does not affect element width */
+}
+
+/* Body default styling */
+body {
+    font-family: Arial, sans-serif;  /* Set a clean, default font */
+    background-color: #f5f5f5;       /* Light background color */
+    color: #333;                     /* Dark text color for good contrast */
+    line-height: 1.6;                /* Increased line height for readability */
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;               /* Ensure the body takes full viewport height */
+}
+
+/* Container styling */
+.container {
+    max-width: 1200px;      /* Limit max width */
+    width: 100%;
+    margin: 0 auto;         /* Center the container */
+    padding: 0 20px;
+    box-sizing: border-box; /* Ensure padding does not affect total width */
+}
+
+/* Flex utility for main content and footer alignment */
+.main-content {
+    flex: 1;                /* Allows main content to fill remaining space */
+    text-align: center;
+    padding: 20px;
+}
+
+
+/* Navigation bar styles */
+.navbar {
+    background-color: #333;
+    width: 100%;
+    padding: 10px 20px;
+}
+
+
+.navbar .container {
+    max-width: 1200px;      /* Constrain inner content width */
+    margin: 0 auto;         /* Center the inner container */
+    padding: 0 20px;        /* Horizontal padding inside the container */
+    display: flex;          /* Flex layout for nav items */
+    justify-content: center; /* Center items horizontally */
+    box-sizing: border-box;
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center; /* Center nav items within the navbar */
+}
+
+.navbar ul li {
+    margin-right: 20px;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+.navbar ul li a:hover {
+    color: #ffdd57;
+}
+
+/* Responsive layout: Adjust padding for smaller screens */
+@media (max-width: 768px) {
+    .navbar ul {
+        flex-direction: column; /* Stack nav items vertically */
+        align-items: center;
+    }
+
+    .container {
+        padding: 0 10px;
+    }
+
+    .movie-card {
+            width: 100%;         /* Full width on smaller screens */
+            margin: 10px 0;       /* Reduce space between cards */
+        }
+}
+
+
+/* Container for the movie list */
+ul {
+    display: grid;                        /* Use CSS Grid */
+    grid-template-columns: repeat(4, 1fr); /* 4 columns per row */
+    gap: 20px;                            /* Space between the cards */
+    list-style-type: none;                /* Remove default list styling */
+    margin: 0;
+    padding: 0;
+}
+
+/* Movie card styling */
+.movie-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+
+
+    overflow: hidden;         /* Make sure content doesn’t overflow the card */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    text-align: center;       /* Center text inside the card */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effects */
+
+}
+
+.movie-cover-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 150%;  /* Maintain a 2:3 aspect ratio (height/width * 100) */
+    overflow: hidden;
+}
+
+/* Card hover effects */
+.movie-card:hover {
+    transform: translateY(-5px);  /* Lift the card on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Stronger shadow */
+}
+
+/* Movie image styling */
+.movie-cover-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;             /* Make image fill the width of the card */
+    height: 100%           /* Fixed height for consistency */
+    object-fit: cover;       /* Ensure the image covers the area without distortion */
+    object-position: top;
+    border-bottom: 1px solid #ddd; /* Small separator line between image and title */
+}
+
+/* Movie title link styling */
+a {
+    display: block;          /* Make the link block level for spacing */
+    text-decoration: none;   /* Remove underline from the link */
+    color: #333;             /* Dark text color */
+    font-weight: bold;       /* Bold title */
+    padding: 10px 15px;      /* Padding around the text */
+    transition: color 0.3s ease; /* Smooth transition for color */
+}
+
+/* Link hover effect */
+a:hover {
+    color: #ffdd57;          /* Change text color on hover */
+}
+
+
+
+/* Responsive layout: adjust the number of cards per row on small screens */
+@media (max-width: 1024px) {
+    ul {
+        grid-template-columns: repeat(3, 1fr); /* 3 columns for tablet-sized screens */
+    }
+}
+
+@media (max-width: 768px) {
+    ul {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns for mobile screens */
+    }
+}
+
+@media (max-width: 480px) {
+    ul {
+        grid-template-columns: 1fr; /* 1 column for very small screens */
+    }
+}
+
+
+/* Overall container for the movie details page */
+.movie-detail-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* Header section with poster and movie info */
+.movie-header {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+/* Poster image */
+.movie-poster {
+    width: 250px;
+    height: 375px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-right: 20px;
+}
+
+/* Movie details (title, rating, genres) */
+.movie-header-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-width: 800px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin: 0;
+    color: #333;
+}
+
+.release-date,
+.rating,
+.genres {
+    font-size: 1.2rem;
+    margin: 5px 0;
+    color: #666;
+}
+
+/* Movie description */
+.movie-description {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.movie-description h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.movie-description p {
+    font-size: 1rem;
+    color: #444;
+    line-height: 1.6;
+    text-align: justify;
+}
+
+/* Cast section */
+.movie-cast {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.movie-cast h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.movie-cast ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.movie-cast li {
+    font-size: 1.1rem;
+    color: #444;
+}
+
+
+
+.movie-reviews {
+    width: 100%;
+    margin-top: 20px;
+}
+
+
+
+

@@ -21,16 +21,19 @@ public class Movie {
 
     private String type;
 
+    private String CoverImage;
+
     public Movie() {
     }
 
-    public Movie(String title, String genre, String director, int releaseYear, String description, String type) {
+    public Movie(String title, String genre, String director, int releaseYear, String description, String type, String coverImage) {
         this.title = title;
         this.genre = genre;
         this.director = director;
         this.releaseYear = releaseYear;
         this.description = description;
         this.type = type;
+        this.CoverImage = coverImage;
     }
 
     public Long getId() {
@@ -73,13 +76,27 @@ public class Movie {
         this.releaseYear = releaseYear;
     }
 
-    public String getDescription() { return description; }
+    public String getDescription() {
+        return description;
+    }
 
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public String getType() { return type; }
+    public String getType() {
+        return type;
+    }
 
-    public void setType(String type) { this.type = type; }
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getCoverImage() {
+        return CoverImage;
+    }
+
+    public void setCoverImage(String coverImage) {
+        CoverImage = coverImage;
+    }
 }

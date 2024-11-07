@@ -4,21 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Browsing Catalog</title>
-    <title>User List</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
 </head>
 <body>
-<h1>The Movie Browsing Catalogue</h1>
+
 <div th:replace="/nav :: nav"></div>
-<h2 th:text="${contentTitle}">Movies</h2>
-<div>
-    <a th:href="@{'/' + ${contextPath} + '/categories'}">Categories</a>
+<div class="container">
+    <!-- Main Content -->
+    <div class="main-content">
+        <h1>Movies</h1>
+        <div>
+            <a th:href="@{'/' + ${contextPath} + '/categories'}">Categories</a>
+        </div>
+        <div>
+            <ul>
+                <li th:each="movie : ${movies}">
+                    <div class="movie-card">
+
+                        <div class="movie-cover-container">
+                            <!-- Movie cover image -->
+                            <img th:src="@{${movie.CoverImage}}" alt="Cover Image" class="movie-cover-image"/>
+                        </div>
+
+                        <a th:href="@{'/' + ${contextPath} + '/' + ${movie.id}}" th:text="${movie.title}"></a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
-<div>
-    <ul>
-        <li th:each="movie : ${movies}">
-            <a th:href="@{'/' + ${contextPath} + '/' + ${movie.id}}" th:text="${movie.title}"></a>
-        </li>
-    </ul>
-</div>
+
 </body>
 </html>
