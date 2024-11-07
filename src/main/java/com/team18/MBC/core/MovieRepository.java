@@ -8,8 +8,13 @@ import java.util.Optional;
 
 public interface MovieRepository extends JpaRepository<Movie, Long> {
     List<Movie> findByType(String type);
+
     Optional<Movie> findByIdAndType(Long id, String type);
 
     @Query("SELECT m FROM Movie m WHERE m.genre LIKE %:genre% AND m.type = 'tv_show'")
     List<Movie> findTVShowByGenreContaining(String genre);
+
+
+    @Query("SELECT m FROM Movie m WHERE m.genre LIKE %:genre% AND m.type = 'movie'")
+    List<Movie> findMovieByGenreContaining(String genre);
 }

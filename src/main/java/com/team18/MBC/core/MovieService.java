@@ -18,6 +18,7 @@ public class MovieService {
         Optional<Movie> movie = movieRepository.findByIdAndType(id, "movie");
         return movie.orElse(null);
     }
+
     public List<Movie> getAllMovies() {
         return movieRepository.findByType("movie");
     }
@@ -28,6 +29,7 @@ public class MovieService {
         Optional<Movie> movie = movieRepository.findByIdAndType(id, "tv_show");
         return movie.orElse(null);
     }
+
     public List<Movie> getAllTvShows() {
         return movieRepository.findByType("tv_show");
     }
@@ -36,4 +38,10 @@ public class MovieService {
     public List<Movie> getTvShowsByGenre(String genre) {
         return movieRepository.findTVShowByGenreContaining(genre);
     }
+
+    public List<Movie> getMoviesByGenre(String genre) {
+        return movieRepository.findMovieByGenreContaining(genre);
+    }
+
+
 }

@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/movies")
@@ -31,6 +34,7 @@ public class MovieController {
         model.addAttribute("contentTitle", "Movies");
         return "movies";
     }
+
     @GetMapping("/{id}")
     public String getMovieById(@PathVariable Long id, Model model) {
         Movie movie = movieService.getMovieById(id);
@@ -48,5 +52,29 @@ public class MovieController {
             return "404";
         }
     }
+
+
+    @GetMapping("/categories")
+    public String getMovieCategories(Model model) {
+        List<Movie> movies = movieService.getAllMovies();
+
+        Set<String> uniqueGenres = new HashSet<>();
+        for (Movie movie : movies) {
+            String[] genres = movie.getGenre().split(", ");
+            uniqueGenres.addAll(Arrays.asList(genres));
+        }
+
+        // Add the unique genres to the model
+        model.addAttribute("categories", uniqueGenres);
+        return "movieCategories";
+    }
+
+    @GetMapping("/categories/{category}")
+    public String getMoviesBySpecificCategory(@PathVariable String category, Model model) {
+        List<Movie> filteredMovies = movieService.getMoviesByGenre(category);
+        model.addAttribute("movies", filteredMovies);
+        return "movieCategoriesSpecific";
+    }
+
 
 }
