@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Watchlists</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+</head>
+
+<body>
+<div th:replace="/nav :: nav"></div>
+<h1>All User Watchlists</h1>
+
+<div th:each="watchlist : ${watchlists}" class="watchlist">
+  <a th:href="'/watchlists/' + ${watchlist.id}"><h2 th:text="${watchlist.name}">Watchlist Name</h2></a>
+</div>
+</body>
+</html>

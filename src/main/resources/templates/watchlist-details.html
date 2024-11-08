@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Watchlist Details</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div th:replace="/nav :: nav"></div>
+<div class="container">
+  <div class="main-content">
+    <h1 th:text="${watchlist.name}">Watchlist Details</h1>
+    <div>
+      <ul>
+        <th:block th:each="movie : ${watchlistItems}">
+          <li>
+            <div class="movie-card">
+              <div class="movie-cover-container">
+                <img th:src="@{${movie.coverImage}}" alt="Cover Image" class="movie-cover-image"/>
+              </div>
+              <a th:href="@{'/' + (${movie.type == 'movie' ? 'movies' : 'tvshows'}) + '/' + ${movie.id}}" th:text="${movie.title}">Movie Title</a>
+            </div>
+          </li>
+        </th:block>
+      </ul>
+    </div>
+  </div>
+</div>
+</body>
+</html>
