@@ -76,5 +76,10 @@ public class MovieController {
         return "movieCategoriesSpecific";
     }
 
-
+    @GetMapping("/top-movies")
+    public String getTopMovies(Model model) {
+        List<Movie.MovieRating> topMovies = movieService.getTopMovies();
+        model.addAttribute("movies", topMovies);
+        return "topMovies";
+    }
 }

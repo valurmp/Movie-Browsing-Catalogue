@@ -14,9 +14,11 @@
     <!-- Main Content -->
     <div class="main-content">
         <h1>Movies</h1>
-        <div>
+        <div class="menu-links">
             <a th:href="@{'/' + ${contextPath} + '/categories'}">Categories</a>
+            <a th:href="@{/movies/top-movies}">Top Movies</a>
         </div>
+
         <div>
             <ul>
                 <li th:each="movie : ${movies}">

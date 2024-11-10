@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top 10 Movies</title>
+</head>
+<body>
+
+<div th:replace="/nav :: nav"></div>
+
+<div class="container">
+  <h1>Top 10 Movies</h1>
+  <ul>
+    <li th:each="movie : ${movies}">
+      <div class="movie-card">
+        <h2 th:text="${movie.title}"></h2>
+        <p th:text="'Genre: ' + ${movie.genre}"></p>
+        <p th:text="'Director: ' + ${movie.director}"></p>
+        <p th:text="'Release Year: ' + ${movie.releaseYear}"></p>
+        <p th:text="'Description: ' + ${movie.description}"></p>
+        <p th:text="'Rating: ' + ${movie.rating}"></p>
+      </div>
+    </li>
+  </ul>
+</div>
+
+</body>
+</html>
