@@ -4,14 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
 </head>
 <body>
-<h1>User Profile</h1>
 <div th:replace="/nav :: nav"></div>
+<h1>User Profile</h1>
 <div>
     <p>Username: <span th:text="${user.username}">Username</span></p>
     <p>Email: <span th:text="${user.email}">Email</span></p>
-
+    <a th:href="@{/users/{id}/watchlists(id=${user.ID})}">
+        <button>Watchlists</button>
+    </a>
     <div th:if="${profileImage != null}">
         <img th:src="@{/images/{id}(id=${profileImage.id})}" alt="Profile Image" style="max-width:200px; max-height:200px"/>
     </div>
@@ -28,6 +31,9 @@
         </a>
         <a href="/images/upload">
             <button>Upload Picture</button>
+        </a>
+        <a th:href="@{/user-profile/settings}">
+            <button>Settings</button>
         </a>
     </div>
 </div>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div th:replace="/nav :: nav"></div>
+<div class="container">
+        <div class="main-content">
+            <h1>TV Show Categories</h1>
+            <div class="genre-buttons">
+                <h3>Browse by Category</h3>
+                <ul>
+                    <th:block th:each="category : ${categories}">
+                        <li>
+                            <a th:href="@{/tvshows/categories/{category}(category=${category})}" th:text="${category}">Genre</a>
+                        </li>
+                    </th:block>
+                </ul>
+            </div>
+        </div>
+</div>
+</body>
+</html>

@@ -163,4 +163,15 @@ public class UserController {
         }
         return "redirect:/login";
     }
+    @RequestMapping(value = "/user-profile/settings", method = RequestMethod.GET)
+    public String getUserSettings(HttpSession session, Model model) {
+        User sessionUser = (User) session.getAttribute("LoggedInUser");
+        if (sessionUser != null) {
+            model.addAttribute("user", sessionUser);
+            return "usersettings";
+        }
+        return "redirect:/login";
+    }
+
+
 }

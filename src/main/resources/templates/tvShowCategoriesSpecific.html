@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div th:replace="/nav :: nav"></div>
+<div class="container">
+    <div class="main-content">
+        <h1 th:text="${category} + ' TV Shows'">TV Show Categories</h1>
+        <h3>Selected TV Show Category: <span th:text="${category}"></span></h3>
+        <div th:if="${not tvShows.isEmpty()}">
+            <ul>
+                <li th:each="tvShow : ${tvShows}">
+                    <div class="movie-card">
+
+                        <div class="movie-cover-container">
+                            <!-- TV Show cover image -->
+                            <img th:src="@{${tvShow.coverImage}}" alt="Cover Image" class="movie-cover-image"/>
+                        </div>
+
+                        <a th:href="@{'/tvshows/' + ${tvShow.id}}" th:text="${tvShow.title}"></a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

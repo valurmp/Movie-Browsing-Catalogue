@@ -1,29 +1,45 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Movie Browsing Catalog</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Browsing Catalog</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
 </head>
 <body>
-<h1>The Movie Browsing Catalogue</h1>
+
 <div th:replace="/nav :: nav"></div>
-<div id="movie">
-  <h2 th:text="${movie.title}">Movie Title</h2>
-  <p th:text="'Average Rating: ' + ${averageRating}"></p>
-  <p th:text="${movie.description}">Description</p>
-  <p th:text="${movie.genre}">Genre</p>
-  <p th:text="${movie.releaseYear}">Release Year</p>
-  <p th:text="${movie.director}">Director</p>
-</div>
-<div id="reviews">
-  <h2>User Reviews:</h2>
-  <ul>
-    <li th:each="review : ${reviews}">
-      <p th:text="'Rating: ' + ${review.rating}"></p>
-      <p th:text="${review.review_text}"></p>
-    </li>
-  </ul>
+<div class="movie-detail-container">
+    <div class="movie-header">
+        <img th:src="@{${movie.CoverImage}}" alt="Movie Poster" class="movie-poster"/>
+        <div class="movie-header-info">
+            <h1 th:text="${movie.title}">Movie Title</h1>
+            <p class="release-date" th:text="'Release Date: ' + ${movie.releaseYear}">Release Date</p>
+            <p class="rating" th:text="'Rating: ' + ${averageRating}">Rating: 8.5</p>
+            <p class="genres" th:text="'Genres: ' + ${movie.genre}">Genres</p>
+        </div>
+    </div>
+
+    <div class="movie-description">
+        <h3>Description</h3>
+        <p th:text="${movie.description}">Movie description goes here.</p>
+    </div>
+
+    <div class="movie-cast">
+        <h3>Cast</h3>
+        <ul>
+            <div>insert actors here</div>
+        </ul>
+    </div>
+    <div class="movie-reviews">
+        <h2>User Reviews:</h2>
+        <ul>
+            <li th:each="review : ${reviews}">
+                <p th:text="'Rating: ' + ${review.rating}"></p>
+                <p th:text="${review.review_text}"></p>
+            </li>
+        </ul>
+    </div>
 </div>
 </body>
 </html>
