@@ -13,7 +13,7 @@
 <div class="container">
     <!-- Main Content -->
     <div class="main-content">
-        <h1>Movies</h1>
+        <h1 th:text="${contentTitle}">Movies</h1>
         <div class="menu-links">
             <a th:href="@{'/' + ${contextPath} + '/categories'}">Categories</a>
             <a th:href="@{/movies/top-movies}">Top Movies</a>
