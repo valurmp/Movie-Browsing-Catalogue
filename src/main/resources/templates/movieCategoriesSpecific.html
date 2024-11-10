@@ -3,17 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
 </head>
 <body>
-<h1>Movie Categories</h1>
 <div th:replace="/nav :: nav"></div>
-<h3>Selected Movie Category: <span th:text="${category}"></span></h3>
-<div th:if="${not movies.isEmpty()}">
-    <ul>
-        <li th:each="movie : ${movies}">
-            <a th:href="@{'/movies/' + ${movie.id}}" th:text="${movie.title}"></a>
-        </li>
-    </ul>
+<div class="container">
+    <div class="main-content">
+        <h1 th:text="${category} + ' Movies'">Movie Categories</h1>
+        <h3>Selected Movie Category: <span th:text="${category}"></span></h3>
+        <div th:if="${not movies.isEmpty()}">
+            <ul>
+                <li th:each="movie : ${movies}">
+                    <div class="movie-card">
+
+                        <div class="movie-cover-container">
+                            <!-- Movie cover image -->
+                            <img th:src="@{${movie.coverImage}}" alt="Cover Image" class="movie-cover-image"/>
+                        </div>
+
+                        <a th:href="@{'/movies/' + ${movie.id}}" th:text="${movie.title}"></a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
 </body>
 </html>

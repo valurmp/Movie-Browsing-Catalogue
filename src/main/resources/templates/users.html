@@ -2,8 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>List of Users</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
 </head>
 <body>
+<div th:replace="/nav :: nav"></div>
 <h1>User List</h1>
 <ul>
     <li th:each="user : ${users}">

@@ -6,10 +6,15 @@
 </head>
 <body>
 <div th:replace="/nav :: nav"></div>
-<h1>Actor List</h1>
-<ul th:each="actor : ${actors}">
-    <a th:href="@{'/actors/' + ${actor.id}}" th:text="${actor.name}"></a>
-    </ul>
-
+<div class="container">
+    <div class="main-content">
+        <h1>Actor List</h1>
+        <div class="genre-buttons">
+            <ul th:each="actor : ${actors}">
+                <a th:href="@{'/actors/' + ${actor.id}}" th:text="${actor.name}"></a>
+            </ul>
+        </div>
+    </div>
+</div>
 </body>
 </html>
