@@ -2,8 +2,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
 </head>
 <body>
+<div th:replace="/nav :: nav"></div>
 <h2>Login to your account</h2>
 <form action="#" th:action="@{/login}" th:object="${user}" method="post">
     <input type="text" name="username" id="username" th:field="*{username}"/>

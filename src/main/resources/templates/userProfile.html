@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
 </head>
 <body>
-<h1>User Profile</h1>
 <div th:replace="/nav :: nav"></div>
+<h1>User Profile</h1>
 <div>
     <p>Username: <span th:text="${user.username}">Username</span></p>
     <p>Email: <span th:text="${user.email}">Email</span></p>

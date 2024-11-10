@@ -2,8 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Sign up</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
 </head>
 <body>
+<div th:replace="/nav :: nav"></div>
 <h1>Sign up</h1>
 <form action="#" th:action="@{/signup}" method="post">
     <label for="email">Email:</label>
