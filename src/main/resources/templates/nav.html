@@ -1,14 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Navigation</title>
+</head>
+<body>
 <nav class="navbar">
     <div class="container">
         <ul>
             <li><a href="/">Home</a></li>
             <li><a href="/movies">Movies</a></li>
             <li><a href="/tvshows">TV Shows</a></li>
-            <li><a href="/signup">Sign Up</a></li>
-            <li><a href="/login">Login</a></li>
             <li><a href="/actors">Actors</a></li>
-            <li><a href="/watchlists">Watchlists</a></li>
-        </ul>
 
+            <!-- Display only if the user is NOT logged in -->
+            <li th:if="${!isAuthenticated}"><a href="/signup">Sign Up</a></li>
+            <li th:if="${!isAuthenticated}"><a href="/login">Login</a></li>
+
+            <!-- Display only if the user IS logged in -->
+            <li th:if="${isAuthenticated}"><a href="/watchlists">Watchlists</a></li>
+            <li th:if="${isAuthenticated}"><a href="/logout">Logout</a></li>
+
+            <!-- Optional: Display a welcome message with the username if the user is logged in -->
+            <li th:if="${isAuthenticated}">
+                <span>Welcome, <strong th:text="${loggedInUser.username}">User</strong>!</span>
+            </li>
+        </ul>
     </div>
 </nav>
+</body>
+</html>

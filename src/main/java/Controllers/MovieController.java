@@ -32,6 +32,8 @@ public class MovieController {
         model.addAttribute("movies", movies);
         model.addAttribute("contextPath", "movies");
         model.addAttribute("contentTitle", "Movies");
+
+        
         return "movies";
     }
 
@@ -41,6 +43,7 @@ public class MovieController {
         if (movie != null) {
             model.addAttribute("movie", movie);
             model.addAttribute("contextPath", "movies");
+
 
             List<Review> reviews = reviewService.getReviewsByMovieId(id);
             double averageRating = reviewService.getAverageRatingForMovie(id);
