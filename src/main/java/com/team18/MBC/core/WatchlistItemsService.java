@@ -38,4 +38,8 @@ public class WatchlistItemsService {
     public List<WatchlistItems> getItemsByWatchlistId(Long watchlistId) {
         return watchlistItemsRepository.findByWatchlistId(watchlistId);
     }
+
+    public void save(WatchlistItems watchlistItem) {
+        watchlistItemsRepository.save(watchlistItem);
+    }
 }
