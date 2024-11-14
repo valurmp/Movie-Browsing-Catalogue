@@ -39,7 +39,7 @@ public class UserController {
         if (exists == null) {
             userService.save(user);
         }
-        return "redirect:/";
+        return "redirect:/login";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -72,9 +72,10 @@ public class UserController {
     }
 
     @RequestMapping(value = "/delete/{username}", method = RequestMethod.GET)
-    public String deleteUser(@PathVariable("username") String username, Model model) {
+    public String deleteUser(@PathVariable("username") String username, Model model, HttpSession session) {
         User userToDelete = userService.findByUsername(username);
         userService.delete(userToDelete);
+        session.invalidate(); // Manually invalidate the session
         return "redirect:/";
     }
 
