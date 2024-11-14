@@ -1,9 +1,7 @@
 package Controllers;
 
-import com.team18.MBC.core.Movie;
-import com.team18.MBC.core.MovieService;
-import com.team18.MBC.core.Review;
-import com.team18.MBC.core.ReviewService;
+import com.team18.MBC.core.*;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,10 +18,12 @@ import java.util.Set;
 public class MovieController {
     private MovieService movieService;
     private ReviewService reviewService;
+    private ReviewRepository reviewRepository;
 
-    public MovieController(MovieService movieService, ReviewService reviewService) {
+    public MovieController(MovieService movieService, ReviewService reviewService, ReviewRepository reviewRepository) {
         this.movieService = movieService;
         this.reviewService = reviewService;
+        this.reviewRepository = reviewRepository;
     }
 
     @GetMapping
@@ -38,17 +38,24 @@ public class MovieController {
     }
 
     @GetMapping("/{id}")
-    public String getMovieById(@PathVariable Long id, Model model) {
+    public String getMovieById(@PathVariable Long id, Model model, HttpSession session) {
         Movie movie = movieService.getMovieById(id);
         if (movie != null) {
             model.addAttribute("movie", movie);
             model.addAttribute("contextPath", "movies");
 
-
-            List<Review> reviews = reviewService.getReviewsByMovieId(id);
+            List<Review> reviews = reviewRepository.findByMovieId(id);
             double averageRating = reviewService.getAverageRatingForMovie(id);
             model.addAttribute("reviews", reviews);
             model.addAttribute("averageRating", averageRating);
+
+            User loggedInUser = (User) session.getAttribute("LoggedInUser");
+            boolean userHasReviewed = false;
+            if (loggedInUser != null) {
+                userHasReviewed = reviews.stream()
+                        .anyMatch(review -> review.getUser().equals(loggedInUser));
+            }
+            model.addAttribute("userHasReviewed", userHasReviewed);
 
             return "movie-details";
         } else {
