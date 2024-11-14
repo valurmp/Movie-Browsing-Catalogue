@@ -21,6 +21,7 @@ public class WatchlistController {
 
     @Autowired
     private WatchlistService watchlistService;
+    private MovieController movieService;
 
     @GetMapping("/watchlists")
     public String getAllWatchlists(Model model) {
@@ -105,4 +106,24 @@ public class WatchlistController {
         // If the watchlist does not belong to the logged-in user, redirect back with an error
         return "redirect:/error";
     }
+
+
+    @PostMapping("/watchlists/{watchlistId}/remove-movie/{movieId}")
+    public String removeMovieFromWatchlist(@PathVariable Long watchlistId, @PathVariable Long movieId, HttpSession session) {
+        // Fetch the logged-in user
+        User loggedInUser = (User) session.getAttribute("LoggedInUser");
+
+        // Ensure the user is authorized to modify the watchlist
+        Optional<Watchlist> watchlist = watchlistService.getWatchlistById(watchlistId);
+        if (watchlist != null && loggedInUser != null && (watchlist.get().getUser().getID() == (loggedInUser.getID()))) {
+            // Remove the movie from the watchlist
+            watchlistService.removeMovieFromWatchlist(watchlistId, movieId);
+            return "redirect:/watchlists/" + watchlistId; // Redirect back to the watchlist page
+        }
+
+        // If the watchlist doesn't exist or the user is unauthorized, redirect to an error page
+        return "redirect:/error";
+    }
+
+
 }

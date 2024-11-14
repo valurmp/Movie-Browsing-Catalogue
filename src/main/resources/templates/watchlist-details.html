@@ -20,6 +20,13 @@
                             </div>
                             <a th:href="@{'/' + (${movie.type == 'movie' ? 'movies' : 'tvshows'}) + '/' + ${movie.id}}"
                                th:text="${movie.title}">Movie Title</a>
+                            <!-- Remove movie button form -->
+                            <div th:if="${isOwnWatchlist}">
+                                <form th:action="@{'/watchlists/' + ${watchlist.id} + '/remove-movie/' + ${movie.id}}"
+                                      method="post">
+                                    <button type="submit" class="btn-remove-movie">Remove Movie</button>
+                                </form>
+                            </div>
                         </div>
                     </li>
                 </th:block>
