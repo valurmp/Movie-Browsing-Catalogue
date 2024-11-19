@@ -1,5 +1,10 @@
 package Controllers;
 
+import com.team18.MBC.Repositories.ReviewRepository;
+import com.team18.MBC.Services.MovieService;
+import com.team18.MBC.Services.ReviewService;
+import com.team18.MBC.Services.WatchlistItemsService;
+import com.team18.MBC.Services.WatchlistService;
 import com.team18.MBC.core.*;
 import jakarta.servlet.http.HttpSession;
 

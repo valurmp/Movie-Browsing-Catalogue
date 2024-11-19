@@ -1,5 +1,7 @@
-package com.team18.MBC.core;
+package com.team18.MBC.Repositories;
 
+import com.team18.MBC.core.Movie;
+import com.team18.MBC.core.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

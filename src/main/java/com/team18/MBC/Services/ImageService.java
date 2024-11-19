@@ -1,5 +1,8 @@
-package com.team18.MBC.core;
+package com.team18.MBC.Services;
 
+import com.team18.MBC.Repositories.ImageRepository;
+import com.team18.MBC.core.Image;
+import com.team18.MBC.core.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

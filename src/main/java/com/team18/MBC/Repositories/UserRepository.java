@@ -1,5 +1,6 @@
-package com.team18.MBC.core;
+package com.team18.MBC.Repositories;
 
+import com.team18.MBC.core.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 

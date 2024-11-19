@@ -1,7 +1,7 @@
 package Controllers;
 
 import com.team18.MBC.core.Actor;
-import com.team18.MBC.core.ActorService;
+import com.team18.MBC.Services.ActorService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

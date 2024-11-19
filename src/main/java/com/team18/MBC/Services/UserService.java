@@ -1,5 +1,7 @@
-package com.team18.MBC.core;
+package com.team18.MBC.Services;
 
+import com.team18.MBC.core.Image;
+import com.team18.MBC.core.User;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
