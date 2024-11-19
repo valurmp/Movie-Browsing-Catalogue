@@ -11,6 +11,13 @@ public class Movie {
     @OneToMany(mappedBy = "movie")
     private List<WatchlistItems> watchlistItems;
 
+    @ManyToMany
+    @JoinTable(
+            name = "movie_actor", // join table name
+            joinColumns = @JoinColumn(name = "movie_id"), // foreign key for movie
+            inverseJoinColumns = @JoinColumn(name = "actor_id") // foreign key for actor
+    )
+    private List<Actor> cast;  // List of actors (cast)
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,11 +33,9 @@ public class Movie {
 
     private String type;
 
-    private String CoverImage;
-
+    private String coverImage;
     public Movie() {
     }
-
     public Movie(String title, String genre, String director, int releaseYear, String description, String type, String coverImage) {
         this.title = title;
         this.genre = genre;
@@ -38,7 +43,7 @@ public class Movie {
         this.releaseYear = releaseYear;
         this.description = description;
         this.type = type;
-        this.CoverImage = coverImage;
+        this.coverImage = coverImage;
     }
     public Long getId() {
         return id;
@@ -97,13 +102,20 @@ public class Movie {
     }
 
     public String getCoverImage() {
-        return CoverImage;
+        return coverImage;
     }
 
     public void setCoverImage(String coverImage) {
-        CoverImage = coverImage;
+        this.coverImage = coverImage;
     }
 
+    public List<Actor> getCast() {
+        return cast;
+    }
+
+    public void setCast(List<Actor> cast) {
+        this.cast = cast;
+    }
 
     public static class MovieRating {
         private String title;

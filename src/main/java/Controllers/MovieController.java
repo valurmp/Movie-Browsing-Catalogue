@@ -63,17 +63,14 @@ public class MovieController {
             }
             model.addAttribute("userHasReviewed", userHasReviewed);
 
-
-            // Fetch the logged-in user from the session
-          
-
-
             if (loggedInUser != null) {
                 // Fetch the watchlists for the logged-in user
                 List<Watchlist> userWatchlists = watchlistService.getWatchlistsByUserId(loggedInUser.getID());
                 model.addAttribute("userWatchlists", userWatchlists);
             }
 
+            List<Actor> actors = movieService.getActorsByMovieId(id);
+            model.addAttribute("actors", actors);
 
             return "movie-details";
         } else {
