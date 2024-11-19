@@ -19,6 +19,7 @@
             <!-- Display only if the user IS logged in -->
             <li th:if="${isAuthenticated}"><a href="/watchlists">Watchlists</a></li>
             <li th:if="${isAuthenticated}"><a href="/logout">Logout</a></li>
+            <li th:if="${isAuthenticated}"><a href="/users/profile">Profile</a></li>
 
             <!-- Optional: Display a welcome message with the username if the user is logged in -->
             <li th:if="${isAuthenticated}">

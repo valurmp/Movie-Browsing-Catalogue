@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Browsing Catalog</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/modal.css}">
 </head>
 <body>
 
@@ -19,6 +20,10 @@
             <p class="rating" th:text="'Rating: ' + ${averageRating}">Rating</p>
             <p class="genres" th:text="'Genres: ' + ${movie.genre}">Genres</p>
         </div>
+    </div>
+
+    <div th:if="${isAuthenticated}">
+        <button id="AddToWatchlistBtn" class="btn-AddTo-watchlist">Add to Watchlist</button>
     </div>
 
     <div class="movie-description">
@@ -59,6 +64,7 @@
         </ul>
     </div>
 
+
     <div th:if="${isAuthenticated and !userHasReviewed}">
         <h3>Add Your Review</h3>
         <form th:action="@{/reviews/create}" method="post">
@@ -77,5 +83,58 @@
     </div>
 </div>
 
+
+</div>
+
+<!-- Modal for Adding to Watchlist -->
+<div id="watchlistModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" id="closeModalBtn">&times;</span>
+        <h2>Select a Watchlist</h2>
+
+        <h3>Add this movie to one of your watchlists:</h3>
+        <form th:action="@{'/' + ${contextPath} + '/' + add-to-watchlist}" method="POST">
+            <input type="hidden" th:value="${movie.id}" name="movieId"/>
+            <label for="watchlist">Select Watchlist:</label>
+            <select id="watchlist" name="watchlistId">
+                <option th:each="watchlist : ${userWatchlists}" th:value="${watchlist.id}"
+                        th:text="${watchlist.name}"></option>
+            </select>
+            <button type="submit">Add to Watchlist</button>
+        </form>
+    </div>
+</div>
+<!-- Scripts for Modal -->
+<script>
+    // Get modal and buttons
+    var modal = document.getElementById("watchlistModal");
+    var btn = document.getElementById("AddToWatchlistBtn");
+    var span = document.getElementById("closeModalBtn");
+
+    // Open the modal when the button is clicked
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    // Close the modal when the user clicks on <span> (x)
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // Close the modal if the user clicks anywhere outside of the modal
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+
+
+
+
+
+
+
+</script>
 </body>
 </html>
