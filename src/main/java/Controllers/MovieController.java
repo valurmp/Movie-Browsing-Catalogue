@@ -1,29 +1,28 @@
 package Controllers;
 
-import com.team18.MBC.core.Movie;
-import com.team18.MBC.core.MovieService;
-import com.team18.MBC.core.Review;
-import com.team18.MBC.core.ReviewService;
+import com.team18.MBC.core.*;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 @RequestMapping("/movies")
 public class MovieController {
+
+    private WatchlistService watchlistService;
     private MovieService movieService;
     private ReviewService reviewService;
+    @Autowired
+    private WatchlistItemsService watchlistItemsService;
 
-    public MovieController(MovieService movieService, ReviewService reviewService) {
+    public MovieController(MovieService movieService, ReviewService reviewService, WatchlistService watchlistService) {
         this.movieService = movieService;
         this.reviewService = reviewService;
+        this.watchlistService = watchlistService;
     }
 
     @GetMapping
@@ -33,12 +32,12 @@ public class MovieController {
         model.addAttribute("contextPath", "movies");
         model.addAttribute("contentTitle", "Movies");
 
-        
+
         return "movies";
     }
 
     @GetMapping("/{id}")
-    public String getMovieById(@PathVariable Long id, Model model) {
+    public String getMovieById(@PathVariable Long id, Model model, HttpSession session) {
         Movie movie = movieService.getMovieById(id);
         if (movie != null) {
             model.addAttribute("movie", movie);
@@ -49,6 +48,17 @@ public class MovieController {
             double averageRating = reviewService.getAverageRatingForMovie(id);
             model.addAttribute("reviews", reviews);
             model.addAttribute("averageRating", averageRating);
+
+
+            // Fetch the logged-in user from the session
+            User loggedInUser = (User) session.getAttribute("LoggedInUser");
+
+
+            if (loggedInUser != null) {
+                // Fetch the watchlists for the logged-in user
+                List<Watchlist> userWatchlists = watchlistService.getWatchlistsByUserId(loggedInUser.getID());
+                model.addAttribute("userWatchlists", userWatchlists);
+            }
 
             return "movie-details";
         } else {
@@ -84,5 +94,29 @@ public class MovieController {
         List<Movie.MovieRating> topMovies = movieService.getTopMovies();
         model.addAttribute("movies", topMovies);
         return "topMovies";
+    }
+
+    @PostMapping("/add-to-watchlist")
+    public String addToWatchlist(@RequestParam Long movieId, @RequestParam Long watchlistId, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("LoggedInUser");
+
+        if (loggedInUser != null) {
+            Optional<Movie> movie = Optional.ofNullable(movieService.getMovieById(movieId));
+            Optional<Watchlist> watchlist = Optional.ofNullable(watchlistService.findById(watchlistId));
+
+            if (movie.isPresent() && watchlist.isPresent() && watchlist.get().getUser().getID() == loggedInUser.getID()) {
+                // Create a new watchlist_item entry
+                WatchlistItems watchlistItem = new WatchlistItems();
+                watchlistItem.setMovie(movie.get());
+                watchlistItem.setWatchlist(watchlist.get());
+
+                // Save the new entry to the watchlist_items table
+                watchlistItemsService.save(watchlistItem);
+
+                return "redirect:/movies/" + movieId; // Redirect to movie details page
+            }
+        }
+
+        return "redirect:/error"; // Redirect to an error page if something goes wrong
     }
 }
