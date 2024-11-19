@@ -101,4 +101,33 @@ public class ReviewController {
         System.out.println("User has reviewed: " + contextPath);
         return "redirect:/" + contextPath + "/" + movieId;
     }
+
+    @PostMapping("/update/{reviewId}")
+    public String updateReview(
+            @PathVariable Long reviewId,
+            @RequestParam int rating,
+            @RequestParam String reviewText,
+            @RequestParam String contextPath,
+            HttpSession session,
+            Model model
+    ) {
+        User loggedInUser = (User) session.getAttribute("LoggedInUser");
+        if (loggedInUser == null) {
+            model.addAttribute("error", "You must be logged in to update a review.");
+            return "redirect:/login";
+        }
+
+        Review review = reviewService.getReviewsById(reviewId);
+        if (review == null || !review.getUser().equals(loggedInUser)) {
+            model.addAttribute("error", "You are not authorized to update this review.");
+            return "redirect:/" + contextPath;
+        }
+
+        review.setRating(rating);
+        review.setReview_text(reviewText);
+
+        reviewService.saveReview(review);
+
+        return "redirect:/" + contextPath + "/" + review.getMovie().getId();
+    }
 }
