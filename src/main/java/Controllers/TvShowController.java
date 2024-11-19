@@ -67,6 +67,8 @@ public class TvShowController {
                 model.addAttribute("userWatchlists", userWatchlists);
             }
 
+            List<Actor> actors = movieService.getActorsByMovieId(id);
+            model.addAttribute("actors", actors);
 
             return "movie-details";
         } else {
