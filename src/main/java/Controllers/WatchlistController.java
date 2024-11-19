@@ -3,7 +3,7 @@ package Controllers;
 import com.team18.MBC.core.Movie;
 import com.team18.MBC.core.User;
 import com.team18.MBC.core.Watchlist;
-import com.team18.MBC.core.WatchlistService;
+import com.team18.MBC.Services.WatchlistService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

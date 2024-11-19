@@ -1,5 +1,8 @@
-package com.team18.MBC.core;
+package com.team18.MBC.Services;
 
+import com.team18.MBC.Repositories.ReviewRepository;
+import com.team18.MBC.core.Movie;
+import com.team18.MBC.core.Review;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

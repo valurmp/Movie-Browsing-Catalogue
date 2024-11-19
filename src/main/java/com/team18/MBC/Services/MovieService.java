@@ -1,12 +1,16 @@
-package com.team18.MBC.core;
+package com.team18.MBC.Services;
 
+import com.team18.MBC.Repositories.ActorRepository;
+import com.team18.MBC.Repositories.MovieActorRepository;
+import com.team18.MBC.Repositories.MovieRepository;
+import com.team18.MBC.core.Actor;
+import com.team18.MBC.core.Movie;
+import com.team18.MBC.core.MovieActor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.PageRequest;
 
 @Service
 public class MovieService {

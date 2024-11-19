@@ -1,5 +1,7 @@
 package Controllers;
 
+import com.team18.MBC.Services.MovieService;
+import com.team18.MBC.Services.ReviewService;
 import com.team18.MBC.core.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.ResponseEntity;

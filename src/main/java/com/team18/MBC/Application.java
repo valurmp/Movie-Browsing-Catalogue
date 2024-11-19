@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"Controllers", "com/team18/MBC/core"})
+@ComponentScan(basePackages = {"Controllers", "com/team18/MBC/"})
 public class Application {
     //jdv4@hi.is was here just now
     //vmp2@hi.is was here

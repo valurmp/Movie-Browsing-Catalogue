@@ -1,5 +1,10 @@
-package com.team18.MBC.core;
+package com.team18.MBC.Services;
 
+import com.team18.MBC.Repositories.MovieRepository;
+import com.team18.MBC.Repositories.WatchlistRepository;
+import com.team18.MBC.core.Movie;
+import com.team18.MBC.core.User;
+import com.team18.MBC.core.Watchlist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
