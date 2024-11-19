@@ -12,9 +12,13 @@ import org.springframework.data.domain.PageRequest;
 public class MovieService {
 
     private MovieRepository movieRepository;
+    private MovieActorRepository movieActorRepository;
+    private ActorRepository actorRepository;
 
-    public MovieService(MovieRepository movieRepository) {
+    public MovieService(MovieRepository movieRepository, MovieActorRepository movieActorRepository, ActorRepository actorRepository) {
         this.movieRepository = movieRepository;
+        this.movieActorRepository = movieActorRepository;
+        this.actorRepository = actorRepository;
     }
 
     public Movie getMovieById(Long id) {
@@ -62,5 +66,16 @@ public class MovieService {
             topMovies.add(movieRating);
         }
         return topMovies;
+    }
+    public List<Actor> getActorsByMovieId(Long movieId) {
+        List<MovieActor> movieActors = movieActorRepository.findByMovieId(movieId);
+        List<Actor> actors = new ArrayList<>();
+        for (MovieActor movieActor : movieActors) {
+            Actor actor = movieActor.getActor();
+            if (actor != null) {
+                actors.add(actor);
+            }
+        }
+        return actors;
     }
 }
