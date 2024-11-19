@@ -34,8 +34,9 @@
     <div class="movie-cast">
         <h3>Cast</h3>
         <ul>
-            <!-- Assume actors list or similar to be added here dynamically -->
-            <li>Insert actors here</li>
+            <th:block th:each="actor : ${actors}">
+                <a th:href="@{'/actors/' + ${actor.id}}"><li th:text="${actor.name}"></li></a>
+            </th:block>
         </ul>
     </div>
 
