@@ -2,7 +2,9 @@ package Controllers;
 
 import com.team18.MBC.core.*;
 import jakarta.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,13 +18,17 @@ public class MovieController {
     private WatchlistService watchlistService;
     private MovieService movieService;
     private ReviewService reviewService;
-    @Autowired
+    private ReviewRepository reviewRepository;
+     @Autowired
     private WatchlistItemsService watchlistItemsService;
 
-    public MovieController(MovieService movieService, ReviewService reviewService, WatchlistService watchlistService) {
+
+    public MovieController(MovieService movieService, ReviewService reviewService, WatchlistService watchlistService, ReviewRepository reviewRepository) {
         this.movieService = movieService;
         this.reviewService = reviewService;
         this.watchlistService = watchlistService;
+        this.reviewRepository = reviewRepository;
+
     }
 
     @GetMapping
@@ -43,15 +49,23 @@ public class MovieController {
             model.addAttribute("movie", movie);
             model.addAttribute("contextPath", "movies");
 
-
-            List<Review> reviews = reviewService.getReviewsByMovieId(id);
+            List<Review> reviews = reviewRepository.findByMovieId(id);
             double averageRating = reviewService.getAverageRatingForMovie(id);
             model.addAttribute("reviews", reviews);
             model.addAttribute("averageRating", averageRating);
 
-
             // Fetch the logged-in user from the session
             User loggedInUser = (User) session.getAttribute("LoggedInUser");
+            boolean userHasReviewed = false;
+            if (loggedInUser != null) {
+                userHasReviewed = reviews.stream()
+                        .anyMatch(review -> review.getUser().equals(loggedInUser));
+            }
+            model.addAttribute("userHasReviewed", userHasReviewed);
+
+
+            // Fetch the logged-in user from the session
+          
 
 
             if (loggedInUser != null) {
@@ -59,6 +73,7 @@ public class MovieController {
                 List<Watchlist> userWatchlists = watchlistService.getWatchlistsByUserId(loggedInUser.getID());
                 model.addAttribute("userWatchlists", userWatchlists);
             }
+
 
             return "movie-details";
         } else {

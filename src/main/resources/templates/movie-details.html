@@ -10,13 +10,14 @@
 <body>
 
 <div th:replace="/nav :: nav"></div>
+
 <div class="movie-detail-container">
     <div class="movie-header">
-        <img th:src="@{${movie.CoverImage}}" alt="Movie Poster" class="movie-poster"/>
+        <img th:src="${movie.CoverImage}" alt="Movie Poster" class="movie-poster"/>
         <div class="movie-header-info">
             <h1 th:text="${movie.title}">Movie Title</h1>
             <p class="release-date" th:text="'Release Date: ' + ${movie.releaseYear}">Release Date</p>
-            <p class="rating" th:text="'Rating: ' + ${averageRating}">Rating: 8.5</p>
+            <p class="rating" th:text="'Rating: ' + ${averageRating}">Rating</p>
             <p class="genres" th:text="'Genres: ' + ${movie.genre}">Genres</p>
         </div>
     </div>
@@ -33,18 +34,54 @@
     <div class="movie-cast">
         <h3>Cast</h3>
         <ul>
-            <div>insert actors here</div>
+            <!-- Assume actors list or similar to be added here dynamically -->
+            <li>Insert actors here</li>
         </ul>
     </div>
+
     <div class="movie-reviews">
         <h2>User Reviews:</h2>
         <ul>
             <li th:each="review : ${reviews}">
-                <p th:text="'Rating: ' + ${review.rating}"></p>
-                <p th:text="${review.review_text}"></p>
+                <p>
+                    <a th:href="@{/users/{userId}/profile(userId=${review.user.ID})}">
+                        <strong th:text="${review.user.username + ' said:'}">Username said:</strong>
+                    </a>
+                </p>
+                <p th:text="${review.review_text}">Review text goes here.</p>
+                <p th:text="'Rating: ' + ${review.rating}">Rating</p>
+
+                <div th:if="${isAuthenticated and review.user.ID == loggedInUser.ID}">
+                    <a th:href="@{/reviews/update/{reviewId}(reviewId=${review.id})}" class="update-review-btn">
+                        <button type="button">Update Review</button>
+                    </a>
+
+                    <a th:href="@{/reviews/delete/{reviewId}/{contextPath}/{movieId}(reviewId=${review.id}, contextPath=${contextPath}, movieId=${review.movie.id})}">
+                    <button>Delete Review</button>
+                    </a>
+                </div>
             </li>
         </ul>
     </div>
+
+
+    <div th:if="${isAuthenticated and !userHasReviewed}">
+        <h3>Add Your Review</h3>
+        <form th:action="@{/reviews/create}" method="post">
+            <input type="hidden" name="movieId" th:value="${movie.id}" />
+            <input type="hidden" name="contextPath" th:value="${contextPath}" />
+            <label for="rating">Rating:</label>
+            <input type="number" id="rating" name="rating" min="1" max="5" required />
+            <label for="reviewText">Review:</label>
+            <textarea id="reviewText" name="reviewText" required></textarea>
+            <button type="submit">Submit Review</button>
+        </form>
+    </div>
+
+    <div th:if="${!isAuthenticated}">
+        <p><a href="/login">Log in to submit a review.</a></p>
+    </div>
+</div>
 
 
 </div>

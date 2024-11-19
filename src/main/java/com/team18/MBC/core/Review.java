@@ -4,16 +4,20 @@ package com.team18.MBC.core;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "reviews")
+@Table(name = "reviews", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "movie_id"}))
 public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "user_id")
-    private Long userId;
-    @Column(name = "movie_id")
-    private Long movieId;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;  // Reference to the User entity
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "movie_id", nullable = false)
+    private Movie movie;
     private int rating;
     private String review_text;
 
@@ -22,11 +26,11 @@ public class Review {
 
     }
 
-    public Review(int rating, String review_text, long movieId, long userId) {
+    public Review(int rating, String review_text, Movie movie, User user) {
         this.rating=rating;
         this.review_text=review_text;
-        this.movieId=movieId;
-        this.userId=userId;
+        this.movie = movie;
+        this.user=user;
     }
 
 
@@ -38,20 +42,26 @@ public class Review {
         this.id = id;
     }
 
-    public Long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
-
     public Long getMovieId() {
-        return movieId;
+        return movie.getId();
     }
 
     public void setMovieId(Long movieId) {
-        this.movieId = movieId;
+        this.movie.setId(movieId);
+    }
+
+    public Movie getMovie() {
+        return movie;
+    }
+
+    public void setMovie(Movie movie) {
+        this.movie = movie;
     }
 
     public int getRating() {

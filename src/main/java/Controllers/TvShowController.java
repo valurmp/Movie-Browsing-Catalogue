@@ -17,14 +17,18 @@ public class TvShowController {
     private WatchlistService watchlistService;
     private MovieService movieService;
     private ReviewService reviewService;
+    private ReviewRepository reviewRepository;
+
 
     @Autowired
     private WatchlistItemsService watchlistItemsService;
 
-    public TvShowController(MovieService movieService, ReviewService reviewService, WatchlistService watchlistService) {
+    public TvShowController(MovieService movieService, ReviewService reviewService, WatchlistService watchlistService, ReviewRepository reviewRepository) {
         this.movieService = movieService;
         this.reviewService = reviewService;
         this.watchlistService = watchlistService;
+        this.reviewRepository = reviewRepository;
+
     }
 
     @GetMapping
@@ -43,14 +47,19 @@ public class TvShowController {
             model.addAttribute("movie", tvShow);
             model.addAttribute("contextPath", "tvshows");
 
-            List<Review> reviews = reviewService.getReviewsByMovieId(id);
+            List<Review> reviews = reviewRepository.findByMovieId(id);
             double averageRating = reviewService.getAverageRatingForMovie(id);
             model.addAttribute("reviews", reviews);
             model.addAttribute("averageRating", averageRating);
 
             // Fetch the logged-in user from the session
             User loggedInUser = (User) session.getAttribute("LoggedInUser");
-
+            boolean userHasReviewed = false;
+            if (loggedInUser != null) {
+                userHasReviewed = reviews.stream()
+                        .anyMatch(review -> review.getUser().equals(loggedInUser));
+            }
+            model.addAttribute("userHasReviewed", userHasReviewed);
 
             if (loggedInUser != null) {
                 // Fetch the watchlists for the logged-in user
@@ -58,11 +67,13 @@ public class TvShowController {
                 model.addAttribute("userWatchlists", userWatchlists);
             }
 
+
             return "movie-details";
         } else {
             return "404";
         }
     }
+
 
     @GetMapping("/categories")
     public String getTvShowCategories(Model model) {
