@@ -1,6 +1,7 @@
 package com.team18.MBC.core;
 
 import jakarta.persistence.*;
+
 import java.util.List;
 
 @Entity
@@ -13,6 +14,8 @@ public class Actor {
     private String name;
     private int age;
     private String gender;
+    private String Image;
+
 
     @ManyToMany
     @JoinTable(
@@ -21,12 +24,15 @@ public class Actor {
             inverseJoinColumns = @JoinColumn(name = "movie_id") // Foreign key for movie
     )
     private List<Movie> movies; // List of movies the actor has appeared in
+
     public Actor() {
     }
-    public Actor(String name, int age, String gender) {
+
+    public Actor(String name, int age, String gender, String Image) {
         this.name = name;
         this.age = age;
         this.gender = gender;
+        this.Image = Image;
     }
 
     public Long getId() {
@@ -67,5 +73,13 @@ public class Actor {
 
     public void setMovies(List<Movie> movies) {
         this.movies = movies;
+    }
+
+    public String getImage() {
+        return Image;
+    }
+
+    public void setImage(String Image) {
+        this.Image = Image;
     }
 }
