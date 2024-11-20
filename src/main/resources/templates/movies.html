@@ -16,7 +16,9 @@
         <h1 th:text="${contentTitle}">Movies</h1>
         <div class="menu-links">
             <a th:href="@{'/' + ${contextPath} + '/categories'}">Categories</a>
-            <a th:href="@{/movies/top-movies}">Top Movies</a>
+            <div th:if="@{ ${contextPath} == 'movies'}">
+                <a th:href="@{/movies/top-movies}">Top Movies</a>
+            </div>
         </div>
 
         <div>
