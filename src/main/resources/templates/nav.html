@@ -6,26 +6,42 @@
 <body>
 <nav class="navbar">
     <div class="container">
-        <ul>
-            <li><a href="/">Home</a></li>
+        <!-- Left Section: Logo -->
+        <div class="logo">
+            <a href="/"><img src="https://i.imgur.com/WMfSuXW.jpeg"
+                             alt="Site Logo" class="logo-image"/></a>
+        </div>
+
+        <!-- Center Section: Navigation Links -->
+        <ul class="nav-links">
             <li><a href="/movies">Movies</a></li>
             <li><a href="/tvshows">TV Shows</a></li>
             <li><a href="/actors">Actors</a></li>
-
-            <!-- Display only if the user is NOT logged in -->
-            <li th:if="${!isAuthenticated}"><a href="/signup">Sign Up</a></li>
-            <li th:if="${!isAuthenticated}"><a href="/login">Login</a></li>
-
-            <!-- Display only if the user IS logged in -->
-            <li th:if="${isAuthenticated}"><a href="/watchlists">Watchlists</a></li>
-            <li th:if="${isAuthenticated}"><a href="/logout">Logout</a></li>
-            <li th:if="${isAuthenticated}"><a href="/users/profile">Profile</a></li>
-
-            <!-- Optional: Display a welcome message with the username if the user is logged in -->
-            <li th:if="${isAuthenticated}">
-                <span>Welcome, <strong th:text="${loggedInUser.username}">User</strong>!</span>
-            </li>
+            <li><a href="/watchlists">Watchlists</a></li>
         </ul>
+
+        <!-- Right Section: Profile Picture or Login Option -->
+        <div class="profile-section">
+            <!-- Profile Picture and Welcome Message (if logged in) -->
+
+            <div th:if="${isAuthenticated}">
+                <a href="/users/profile">
+                    <div>
+                        <img th:src="${profileImage != null ? '/images/' + profileImage.id : 'https://static.vecteezy.com/system/resources/previews/020/765/399/non_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg'}"
+                             alt="Profile Image"/>
+                    </div>
+                    <div>Profile</div>
+                </a>
+            </div>
+            <div th:if="${isAuthenticated}" class="user-info">
+                <a href="/logout" class="logout-btn">Logout</a>
+            </div>
+
+            <!-- Login Button (if not logged in) -->
+            <div th:if="${!isAuthenticated}">
+                <a href="/login" class="login-btn">Login</a>
+            </div>
+        </div>
     </div>
 </nav>
 </body>
