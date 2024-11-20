@@ -389,6 +389,147 @@ h1 {
     color: #ffdd57;
 }
 
+
+/* General Navbar Styles */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    padding: 10px 20px;
+    width: 100%;  /* Ensure the navbar takes up full width */
+    box-sizing: border-box; /* Include padding in the width calculation */
+}
+
+.navbar .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+
+}
+
+/* Left Section: Logo */
+.logo {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.logo-image {
+    width: 150px; /* Adjust logo size as needed */
+    height: auto;
+    border-radius: 5%; /* Makes the profile picture circular */
+
+}
+
+/* Center Section: Navigation Links */
+.nav-links {
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    justify-content: center;  /* Centers the nav items */
+}
+
+.nav-links li {
+    margin-right: 15px;
+}
+
+.nav-links li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+/* Right Section: Profile Picture or Login Option */
+.profile-section {
+    display: flex;
+    flex-direction: row; /* Stack the image and text vertically */
+    align-items: center;
+    position: relative;
+    cursor: pointer; /* Makes the entire section clickable */
+    transition: background-color 0.3s ease; /* Smooth background change on hover */
+}
+
+/* Profile Picture Styles */
+.profile-section img {
+    width: 40px; /* Set the size of the profile picture */
+    height: 40px;
+    border-radius: 50%; /* Makes the profile picture circular */
+    object-fit: cover; /* Ensures the image covers the area */
+    cursor: pointer; /* Indicates it's clickable */
+    margin-bottom: 5px; /* Adds space between image and text */
+}
+
+/* Profile Text Styles */
+.profile-section div {
+    color: #fff; /* Text color */
+    font-size: 14px; /* Font size */
+    text-align: center; /* Center the text */
+    margin-top: 5px; /* Space between the image and the text */
+    opacity: 1; /* Ensure it's always visible */
+    transition: color 0.3s ease; /* Smooth transition for color change */
+}
+/* Hover Effect: Change text color to yellow when hovering */
+.profile-section:hover div {
+    color: #ffdd57;
+}
+
+
+
+/* Dropdown Menu */
+.profile-dropdown {
+    display: none;
+    position: absolute;
+    top: 45px; /* Position the dropdown just below the profile picture */
+    right: 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 150px;
+    z-index: 1000;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-dropdown a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #333;
+}
+
+.profile-dropdown a:hover {
+    background-color: #f4f4f4;
+}
+
+
+/* Show the dropdown when the profile picture is clicked */
+.profile-section:hover .profile-dropdown {
+    display: block;
+}
+
+/* User Info Section (Logout Button) */
+.user-info {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Align logout button to the right */
+    margin-left: 20px; /* Space between the profile section and the logout button */
+}
+
+.logout-btn, .login-btn {
+    color: white;
+    text-decoration: none;
+    padding: 8px 12px;
+    background-color: #007bff;
+    border-radius: 4px;
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+.logout-btn:hover, .login-btn:hover {
+    background-color: #0056b3;
+
 /* Container for the entire reviews section */
 .movie-reviews {
     margin: 20px;
@@ -528,4 +669,5 @@ h1 {
 
 .review-username:hover {
     color: #ffdd57;
+
 }
