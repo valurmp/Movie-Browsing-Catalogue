@@ -5,19 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Browsing Catalog</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/modal.css}">
 </head>
 <body>
 
 <div th:replace="/nav :: nav"></div>
+
 <div class="movie-detail-container">
     <div class="movie-header">
-        <img th:src="@{${movie.CoverImage}}" alt="Movie Poster" class="movie-poster"/>
+        <img th:src="${movie.CoverImage}" alt="Movie Poster" class="movie-poster"/>
         <div class="movie-header-info">
             <h1 th:text="${movie.title}">Movie Title</h1>
             <p class="release-date" th:text="'Release Date: ' + ${movie.releaseYear}">Release Date</p>
-            <p class="rating" th:text="'Rating: ' + ${averageRating}">Rating: 8.5</p>
+            <p class="rating" th:text="'Rating: ' + ${averageRating}">Rating</p>
             <p class="genres" th:text="'Genres: ' + ${movie.genre}">Genres</p>
         </div>
+    </div>
+
+    <div th:if="${isAuthenticated}">
+        <button id="AddToWatchlistBtn" class="btn-AddTo-watchlist">Add to Watchlist</button>
     </div>
 
     <div class="movie-description">
@@ -28,18 +34,191 @@
     <div class="movie-cast">
         <h3>Cast</h3>
         <ul>
-            <div>insert actors here</div>
+            <th:block th:each="actor : ${actors}">
+                <a th:href="@{'/actors/' + ${actor.id}}"><li th:text="${actor.name}"></li></a>
+            </th:block>
         </ul>
     </div>
+
     <div class="movie-reviews">
         <h2>User Reviews:</h2>
+        <div th:if="${isAuthenticated and !userHasReviewed}">
+            <button id="AddReviewBtn" class="btn-add-review">Add Your Review</button>
+        </div>
+        <div th:if="${!isAuthenticated}">
+            <p><a href="/login">Log in to submit a review.</a></p>
+        </div>
         <ul>
             <li th:each="review : ${reviews}">
-                <p th:text="'Rating: ' + ${review.rating}"></p>
-                <p th:text="${review.review_text}"></p>
+                <p>
+                    <a th:href="@{/users/{userId}/profile(userId=${review.user.ID})}">
+                        <strong th:text="${review.user.username + ' said:'}">Username said:</strong>
+                    </a>
+                </p>
+                <p th:text="${review.review_text}">Review text goes here.</p>
+                <p th:text="'Rating: ' + ${review.rating}">Rating</p>
+
+                <div th:if="${isAuthenticated and review.user.ID == loggedInUser.ID}">
+                    <button type="button" class="update-review-btn" th:data-review-id="${review.id}" th:data-review-text="${review.review_text}" th:data-review-rating="${review.rating}">
+                        Update Review
+                    </button>
+
+                    <a th:href="@{/reviews/delete/{reviewId}/{contextPath}/{movieId}(reviewId=${review.id}, contextPath=${contextPath}, movieId=${review.movie.id})}">
+                    <button>Delete Review</button>
+                    </a>
+                </div>
             </li>
         </ul>
     </div>
+
+    <div id="reviewModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeReviewModalBtn">&times;</span>
+            <h2>Submit Your Review</h2>
+
+            <form th:action="@{/reviews/create}" method="post">
+                <input type="hidden" name="movieId" th:value="${movie.id}" />
+                <input type="hidden" name="contextPath" th:value="${contextPath}" />
+                <label for="rating">Rating:</label>
+                <input type="number" id="rating" name="rating" min="1" max="5" required />
+                <label for="reviewText">Review:</label>
+                <textarea id="reviewText" name="reviewText" required></textarea>
+                <button type="submit">Submit Review</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="updateReviewModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeUpdateModalBtn">&times;</span>
+            <h2>Update Review</h2>
+            <form th:action="@{/reviews/update/{reviewId}}" method="post" id="updateReviewForm">
+                <input type="hidden" name="reviewId" id="updateReviewId" />
+                <input type="hidden" name="contextPath" th:value="${contextPath}" />
+
+                <label for="updateRating">Rating:</label>
+                <input type="number" id="updateRating" name="rating" min="1" max="5" required />
+
+                <label for="updateReviewText">Review:</label>
+                <textarea id="updateReviewText" name="reviewText" required></textarea>
+
+                <button type="submit">Update Review</button>
+            </form>
+        </div>
+    </div>
 </div>
+
+
+</div>
+
+<div id="watchlistModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" id="closeModalBtn">&times;</span>
+        <h2>Select a Watchlist</h2>
+
+        <h3>Add this movie to one of your watchlists:</h3>
+        <form th:action="@{'/' + ${contextPath} + '/' + add-to-watchlist}" method="POST">
+            <input type="hidden" th:value="${movie.id}" name="movieId"/>
+            <label for="watchlist">Select Watchlist:</label>
+            <select id="watchlist" name="watchlistId">
+                <option th:each="watchlist : ${userWatchlists}" th:value="${watchlist.id}"
+                        th:text="${watchlist.name}"></option>
+            </select>
+            <button type="submit">Add to Watchlist</button>
+        </form>
+    </div>
+</div>
+<script>
+    // Get modal and buttons
+    var modal = document.getElementById("watchlistModal");
+    var btn = document.getElementById("AddToWatchlistBtn");
+    var span = document.getElementById("closeModalBtn");
+
+    // Open the modal when the button is clicked
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    // Close the modal when the user clicks on <span> (x)
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // Close the modal if the user clicks anywhere outside of the modal
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+   var reviewModal = document.getElementById("reviewModal");
+    var reviewBtn = document.getElementById("AddReviewBtn");
+    var reviewCloseBtn = document.getElementById("closeReviewModalBtn");
+
+    // Open review modal
+    if (reviewBtn) {
+        reviewBtn.onclick = function () {
+            reviewModal.style.display = "block";
+        };
+    }
+
+    // Close review modal
+    if (reviewCloseBtn) {
+        reviewCloseBtn.onclick = function () {
+            reviewModal.style.display = "none";
+        };
+    }
+
+    // Close modals when clicking outside of them
+    window.onclick = function (event) {
+        if (event.target === watchlistModal) {
+            watchlistModal.style.display = "none";
+        }
+        if (event.target === reviewModal) {
+            reviewModal.style.display = "none";
+        }
+    };
+
+    const updateReviewModal = document.getElementById("updateReviewModal");
+    const closeUpdateModalBtn = document.getElementById("closeUpdateModalBtn");
+    const updateReviewForm = document.getElementById("updateReviewForm");
+    const updateReviewId = document.getElementById("updateReviewId");
+    const updateRating = document.getElementById("updateRating");
+    const updateReviewText = document.getElementById("updateReviewText");
+
+    // Add click event to all "Update Review" buttons
+    document.querySelectorAll(".update-review-btn").forEach((button) => {
+        button.addEventListener("click", function () {
+            // Get review data from the button's data attributes
+            const reviewId = this.getAttribute("data-review-id");
+            const reviewText = this.getAttribute("data-review-text");
+            const reviewRating = this.getAttribute("data-review-rating");
+
+            // Set form fields with the review data
+            updateReviewId.value = reviewId;
+            updateReviewText.value = reviewText;
+            updateRating.value = reviewRating;
+
+            // Update the form's action attribute dynamically
+            updateReviewForm.action = `/reviews/update/${reviewId}`;
+
+            // Open the modal
+            updateReviewModal.style.display = "block";
+        });
+    });
+
+    // Close the modal when the "close" button is clicked
+    closeUpdateModalBtn.onclick = function () {
+        updateReviewModal.style.display = "none";
+    };
+
+    // Close the modal if the user clicks anywhere outside the modal
+    window.onclick = function (event) {
+        if (event.target == updateReviewModal) {
+            updateReviewModal.style.display = "none";
+        }
+    };
+
+</script>
 </body>
 </html>

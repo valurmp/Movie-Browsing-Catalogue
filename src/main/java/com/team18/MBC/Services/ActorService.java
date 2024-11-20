@@ -1,5 +1,7 @@
-package com.team18.MBC.core;
+package com.team18.MBC.Services;
 
+import com.team18.MBC.Repositories.ActorRepository;
+import com.team18.MBC.core.Actor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

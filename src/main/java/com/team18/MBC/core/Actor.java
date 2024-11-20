@@ -1,7 +1,7 @@
 package com.team18.MBC.core;
 
-
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "actors")
@@ -11,20 +11,22 @@ public class Actor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-//    private Long movie_id;
     private int age;
     private String gender;
 
-
+    @ManyToMany
+    @JoinTable(
+            name = "movie_actor", // Join table name
+            joinColumns = @JoinColumn(name = "actor_id"), // Foreign key for actor
+            inverseJoinColumns = @JoinColumn(name = "movie_id") // Foreign key for movie
+    )
+    private List<Movie> movies; // List of movies the actor has appeared in
     public Actor() {
-
     }
-
-    public Actor(int age, String gender, String name) {
+    public Actor(String name, int age, String gender) {
+        this.name = name;
         this.age = age;
         this.gender = gender;
-    //    this.movie_id = movie_id;
-        this.name = name;
     }
 
     public Long getId() {
@@ -42,15 +44,7 @@ public class Actor {
     public void setName(String name) {
         this.name = name;
     }
-/*
-    public Long getMovie_id() {
-        return movie_id;
-    }
 
-    public void setMovie_id(Long movie_id) {
-        this.movie_id = movie_id;
-    }
-*/
     public int getAge() {
         return age;
     }
@@ -65,5 +59,13 @@ public class Actor {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public List<Movie> getMovies() {
+        return movies;
+    }
+
+    public void setMovies(List<Movie> movies) {
+        this.movies = movies;
     }
 }

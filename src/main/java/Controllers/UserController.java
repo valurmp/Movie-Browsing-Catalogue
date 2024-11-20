@@ -1,5 +1,7 @@
 package Controllers;
 
+import com.team18.MBC.Services.ImageService;
+import com.team18.MBC.Services.UserService;
 import com.team18.MBC.core.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +41,7 @@ public class UserController {
         if (exists == null) {
             userService.save(user);
         }
-        return "redirect:/";
+        return "redirect:/login";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -72,9 +74,10 @@ public class UserController {
     }
 
     @RequestMapping(value = "/delete/{username}", method = RequestMethod.GET)
-    public String deleteUser(@PathVariable("username") String username, Model model) {
+    public String deleteUser(@PathVariable("username") String username, Model model, HttpSession session) {
         User userToDelete = userService.findByUsername(username);
         userService.delete(userToDelete);
+        session.invalidate(); // Manually invalidate the session
         return "redirect:/";
     }
 
@@ -95,6 +98,7 @@ public class UserController {
             return ResponseEntity.notFound().build(); // 404 Not Found
         }
     }
+
     @RequestMapping(value = "/users/{id}/profile", method = RequestMethod.GET)
     public String getUserById(@PathVariable("id") Long id, Model model, HttpSession session) {
         User loggedInUser = (User) session.getAttribute("LoggedInUser");
@@ -136,6 +140,13 @@ public class UserController {
     }
 
 
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        // Perform any custom logic here
+        session.invalidate(); // Manually invalidate the session
+        return "redirect:/"; // Redirect to the home page or another URL
+    }
+
 
     @RequestMapping(value = "/users/{ID}/update-password", method = RequestMethod.GET)
     public String showUpdatePasswordPage(@PathVariable("ID") Long ID, Model model) {
@@ -163,6 +174,7 @@ public class UserController {
         }
         return "redirect:/login";
     }
+
     @RequestMapping(value = "/user-profile/settings", method = RequestMethod.GET)
     public String getUserSettings(HttpSession session, Model model) {
         User sessionUser = (User) session.getAttribute("LoggedInUser");
