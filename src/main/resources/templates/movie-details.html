@@ -31,15 +31,15 @@
         <p th:text="${movie.description}">Movie description goes here.</p>
     </div>
 
-    <div class="cast-section">
-        <h3 class="cast-title">Cast</h3>
-        <div class="cast-grid">
+    <div class="movie-cast">
+        <h3>Cast</h3>
+        <div class="actor-list">
             <th:block th:each="actor : ${actors}">
-                <div class="cast-card">
-                    <div class="cast-image-wrapper">
-                        <img th:src="${actor.Image}" alt="Actor Portrait" class="cast-image"/>
+                <div class="actor-card">
+                    <div class="actor-image-container">
+                        <img th:src="${actor.Image}" alt="Actor Poster" class="actor-image"/>
                     </div>
-                    <a th:href="@{'/actors/' + ${actor.id}}" class="cast-name" th:text="${actor.name}"></a>
+                    <a th:href="@{'/actors/' + ${actor.id}}" class="actor-name" th:text="${actor.name}"></a>
                 </div>
             </th:block>
         </div>
@@ -224,6 +224,7 @@
             updateReviewModal.style.display = "none";
         }
     };
+
 
 
 
