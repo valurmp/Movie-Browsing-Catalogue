@@ -514,3 +514,18 @@ h1 {
 .movie-reviews p a:hover {
     text-decoration: underline;
 }
+
+.review-username {
+    display: block;
+    padding: 10px 10px;
+    color: #333;
+    text-align:center;
+    justify-content:center;
+    align-items:center;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.review-username:hover {
+    color: #ffdd57;
+}

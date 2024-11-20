@@ -57,7 +57,7 @@
             <li th:each="review : ${reviews}">
                 <p>
                     <a th:href="@{/users/{userId}/profile(userId=${review.user.ID})}">
-                        <strong th:text="${review.user.username + ' said:'}">Username said:</strong>
+                        <strong  class="review-username" th:text="${review.user.username + ' Said:'}">Username said:</strong>
                     </a>
                 </p>
                 <p th:text="${review.review_text}">Review text goes here.</p>
