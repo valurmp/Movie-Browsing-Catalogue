@@ -51,7 +51,7 @@
             <button id="AddReviewBtn" class="btn-add-review">Add Your Review</button>
         </div>
         <div th:if="${!isAuthenticated}">
-            <p><a href="/login">Log in to submit a review.</a></p>
+            <button id="LoginReviewBtn" class="btn-add-review" onclick="window.location.href='/login'">Log in to submit a review</button>
         </div>
         <ul>
             <li th:each="review : ${reviews}">
