@@ -9,12 +9,15 @@
 </head>
 <body>
 <div th:replace="/nav :: nav"></div>
-
-<h1>Actor</h1>
-<div id="actor">
-    <h2 th:text="'Name: '+${actor.name}">Name</h2>
-    <h3 th:text="'Age: '+${actor.age}">Age</h3>
-    <h3 th:text="'Gender: '+${actor.gender}">Gender</h3>
+<div class="movie-detail-container">
+    <div class="movie-header">
+        <img th:src="${actor.Image}" alt="Movie Poster" class="movie-poster"/>
+        <div class="movie-header-info">
+            <h1 th:text="${actor.name}">Actor name</h1>
+            <p class="release-date" th:text="'Age: ' + ${actor.age}">Age</p>
+            <p class="rating" th:text="'Gender: ' + ${actor.gender}">Gender</p>
+        </div>
     </div>
+</div>
 </body>
 </html>

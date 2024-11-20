@@ -8,10 +8,20 @@
 <div th:replace="/nav :: nav"></div>
 <div class="container">
     <div class="main-content">
-        <h1>Actor List</h1>
-        <div class="genre-buttons">
-            <ul th:each="actor : ${actors}">
-                <a th:href="@{'/actors/' + ${actor.id}}" th:text="${actor.name}"></a>
+        <h1>Actors</h1>
+        <div>
+            <ul>
+                <li th:each="actor : ${actors}">
+                    <div class="movie-card">
+
+                        <div class="movie-cover-container">
+                            <!-- Movie cover image -->
+                            <img th:src="@{${actor.Image}}" alt="Cover Image" class="movie-cover-image"/>
+                        </div>
+
+                        <a th:href="@{'/actors/' + ${actor.id}}" th:text="${actor.name}"></a>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>

@@ -31,13 +31,18 @@
         <p th:text="${movie.description}">Movie description goes here.</p>
     </div>
 
-    <div class="movie-cast">
-        <h3>Cast</h3>
-        <ul>
+    <div class="cast-section">
+        <h3 class="cast-title">Cast</h3>
+        <div class="cast-grid">
             <th:block th:each="actor : ${actors}">
-                <a th:href="@{'/actors/' + ${actor.id}}"><li th:text="${actor.name}"></li></a>
+                <div class="cast-card">
+                    <div class="cast-image-wrapper">
+                        <img th:src="${actor.Image}" alt="Actor Portrait" class="cast-image"/>
+                    </div>
+                    <a th:href="@{'/actors/' + ${actor.id}}" class="cast-name" th:text="${actor.name}"></a>
+                </div>
             </th:block>
-        </ul>
+        </div>
     </div>
 
     <div class="movie-reviews">
@@ -59,12 +64,13 @@
                 <p th:text="'Rating: ' + ${review.rating}">Rating</p>
 
                 <div th:if="${isAuthenticated and review.user.ID == loggedInUser.ID}">
-                    <button type="button" class="update-review-btn" th:data-review-id="${review.id}" th:data-review-text="${review.review_text}" th:data-review-rating="${review.rating}">
+                    <button type="button" class="update-review-btn" th:data-review-id="${review.id}"
+                            th:data-review-text="${review.review_text}" th:data-review-rating="${review.rating}">
                         Update Review
                     </button>
 
                     <a th:href="@{/reviews/delete/{reviewId}/{contextPath}/{movieId}(reviewId=${review.id}, contextPath=${contextPath}, movieId=${review.movie.id})}">
-                    <button>Delete Review</button>
+                        <button>Delete Review</button>
                     </a>
                 </div>
             </li>
@@ -77,10 +83,10 @@
             <h2>Submit Your Review</h2>
 
             <form th:action="@{/reviews/create}" method="post">
-                <input type="hidden" name="movieId" th:value="${movie.id}" />
-                <input type="hidden" name="contextPath" th:value="${contextPath}" />
+                <input type="hidden" name="movieId" th:value="${movie.id}"/>
+                <input type="hidden" name="contextPath" th:value="${contextPath}"/>
                 <label for="rating">Rating:</label>
-                <input type="number" id="rating" name="rating" min="1" max="5" required />
+                <input type="number" id="rating" name="rating" min="1" max="5" required/>
                 <label for="reviewText">Review:</label>
                 <textarea id="reviewText" name="reviewText" required></textarea>
                 <button type="submit">Submit Review</button>
@@ -93,11 +99,11 @@
             <span class="close-btn" id="closeUpdateModalBtn">&times;</span>
             <h2>Update Review</h2>
             <form th:action="@{/reviews/update/{reviewId}}" method="post" id="updateReviewForm">
-                <input type="hidden" name="reviewId" id="updateReviewId" />
-                <input type="hidden" name="contextPath" th:value="${contextPath}" />
+                <input type="hidden" name="reviewId" id="updateReviewId"/>
+                <input type="hidden" name="contextPath" th:value="${contextPath}"/>
 
                 <label for="updateRating">Rating:</label>
-                <input type="number" id="updateRating" name="rating" min="1" max="5" required />
+                <input type="number" id="updateRating" name="rating" min="1" max="5" required/>
 
                 <label for="updateReviewText">Review:</label>
                 <textarea id="updateReviewText" name="reviewText" required></textarea>
@@ -218,6 +224,23 @@
             updateReviewModal.style.display = "none";
         }
     };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </script>
 </body>
