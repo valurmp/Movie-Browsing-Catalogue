@@ -11,6 +11,7 @@
     <groupId>com.team18</groupId>
     <artifactId>MBC</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>war</packaging>
     <name>Movie Browsing Catalogue</name>
     <description>Movie Browsing Catalogue for HBV501G</description>
     <url/>

@@ -3,13 +3,14 @@ package com.team18.MBC;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {"Controllers", "com/team18/MBC/"})
-public class Application {
+public class Application extends SpringBootServletInitializer {
     //jdv4@hi.is was here just now
     //vmp2@hi.is was here
     //oma9@hi.is was here!!!
