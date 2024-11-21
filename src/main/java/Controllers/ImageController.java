@@ -28,7 +28,7 @@ public class ImageController {
     private ImageService imageService;
 
     @Autowired
-    private UserService userService;  // Service to fetch user details
+    private UserService userService;  // Service to fetch user details.
 
     // GET method to render the upload form
     @GetMapping("/upload")
